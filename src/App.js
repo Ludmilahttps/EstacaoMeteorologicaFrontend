@@ -4,6 +4,8 @@ import { useState } from 'react'
 import GlobalStyle from './GlobalStyle'
 
 import { UserContext } from './UserContext'
+import SignIn from "./pages/SignIn/SignIn"
+import SignUp from "./pages/SignUp/SignUp"
 import Home from "./pages/Home/Home"
 import NewClient from "./pages/NewClient/NewClient"
 import NewOrder from "./pages/NewOrder/NewOrder"
@@ -19,8 +21,10 @@ function App() {
       <BrowserRouter>
         <GlobalStyle />
         <Routes>
-          <Route path="/" element={<  Home />} />
-          <Route path="/novo-cliente" element={< NewClient  />} />
+          <Route path="/" element={< SignIn />} />
+          <Route path="/cadastro" element={< SignUp />} />
+          <Route path="/home" element={<  Home />} />
+          <Route path="/novo-cliente" element={< NewClient />} />
           <Route path="/novo-pedido" element={< NewOrder />} />
           <Route path="/novo-bolo" element={< NewCake />} />
         </Routes>

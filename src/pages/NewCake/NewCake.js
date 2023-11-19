@@ -1,4 +1,4 @@
-import { useState, useContext} from "react"
+import { useState } from "react"
 import { Container } from "./style.js"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
@@ -20,7 +20,7 @@ export default function NewCake() {
 
     const post = {
       name: name,
-      velue: value,
+      price: value,
       description: description,
       image: image
     }
@@ -31,7 +31,8 @@ export default function NewCake() {
       goTo('/')
 
     } catch (error) {
-      if (error.name === "AxiosError") alert("We couldn't find an account with this data!")
+      console.log(error)
+      if (error.name === "AxiosError") alert("Não foi possível cadastrar esse bolo, confira os dados")
     }
   }
 
@@ -43,7 +44,7 @@ export default function NewCake() {
           <input type="text" name="name" placeholder="nome do bolo" value={name} onChange={(e) => setName(e.target.value)}/>
           <input type="number" name="number" placeholder="preço" value={value} onChange={(e) => setValue(e.target.value)} />
           <input type="text" name="description" placeholder="descrição" value={description} onChange={(e) => setDescription(e.target.value)} />
-          <input type="url" name="image" placeholder="link imagem" value={image} onChange={(e) => setImage(e.target.value)} />
+          <input type="text" name="image" placeholder="link imagem" value={image} onChange={(e) => setImage(e.target.value)} />
           <button data-test="registry-save" type="submit">save</button>
         </form>
       </Container>

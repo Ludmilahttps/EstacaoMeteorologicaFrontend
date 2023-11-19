@@ -1,4 +1,4 @@
-import { useState, useContext } from "react"
+import { useState } from "react"
 import { Container } from "./style.js"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
@@ -33,9 +33,9 @@ export default function NewEnter() {
       <Container>
         <h1>Novo Cliente</h1>
         <form onSubmit={sendLogin}>
-          <input type="text" name="nome" placeholder="nome" value={description} onChange={(e) => setValue(e.target.value)} />
+          <input type="text" name="nome" placeholder="nome" value={value} onChange={(e) => setValue(e.target.value)} />
           <input type="text" name="address" placeholder="endereço" value={description} onChange={(e) => setDescription(e.target.value)} />
-          <input type="number" name="phone" placeholder="telefone" value={value} onChange={(e) => setPhone(e.target.value)} />
+          <input type="number" name="phone" placeholder="telefone" value={phone} onChange={(e) => setPhone(e.target.value)} />
           <button type="submit">cadastrar</button>
         </form>
       </Container>

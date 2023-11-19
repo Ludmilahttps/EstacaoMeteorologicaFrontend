@@ -3,10 +3,10 @@ import { HistoricScreen, Feed, Transfers, Balance } from './style'
 import Header from "../../components/Header"
 import Footer from "../../components/Footer"
 import { UserContext } from "../../UserContext.js"
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 
 function Home() {
-    const { info, historic } = useContext(UserContext)
+    const { historic } = useContext(UserContext)
 
     let sale = 0;
 
@@ -18,9 +18,11 @@ function Home() {
         }
     }
 
+    
+
     return (
         <HistoricScreen>
-            <Header info={info} />
+            <Header/>
             <>{historic.length ? (
                 <Feed>
                     <Transfers >

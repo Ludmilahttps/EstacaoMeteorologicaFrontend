@@ -1,8 +1,7 @@
-import { useState, useContext} from "react"
+import { useState } from "react"
 import { Container } from "./style.js"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import { UserContext } from "../../UserContext.js"
 
 export default function NewOrder() {
   const goTo = useNavigate()
@@ -20,10 +19,10 @@ export default function NewOrder() {
     // "totalPrice": "200"
 
     const post = {
-      client: client,
-      cake: cake,
-      value: value,
-      price: price
+      clientId: client,
+      cakeId: cake,
+      quantity: value,
+      totalPrice: price
     }
 
     try {
@@ -32,7 +31,7 @@ export default function NewOrder() {
       goTo('/')
 
     } catch (error) {
-      if (error.name === "AxiosError") alert("We couldn't find an account with this data!")
+      if (error.name === "AxiosError") alert("Não foi possível cadastrar esse pedido, confira os dados")
     }
   }
 
