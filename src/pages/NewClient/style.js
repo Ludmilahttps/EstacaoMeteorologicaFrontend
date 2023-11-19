@@ -10,7 +10,7 @@ flex-direction: column;
 >h1{
     font-weight: 700;
     font-size: 26px;
-    color: #ffffff;
+    color: #D9304F;
 }
 >form{
     >input{
@@ -47,7 +47,7 @@ flex-direction: column;
         width: 326px;
         height: 46px;
         border-style: none;
-        background: #a328d6;
+        background: #D9304F;
         border-radius: 5px;
         border-style: none;
         margin-top: 15px;

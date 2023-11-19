@@ -5,8 +5,9 @@ import GlobalStyle from './GlobalStyle'
 
 import { UserContext } from './UserContext'
 import Home from "./pages/Home/Home"
-import NewEnter from "./pages/NewEnter/NewEnter"
-import NewOut from "./pages/NewOut/NewOut"
+import NewClient from "./pages/NewClient/NewClient"
+import NewOrder from "./pages/NewOrder/NewOrder"
+import NewCake from "./pages/NewCake/NewCake"
 
 function App() {
 
@@ -19,8 +20,9 @@ function App() {
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<  Home />} />
-          <Route path="/novo-cliente" element={< NewEnter  />} />
-          <Route path="/novo-pedido" element={< NewOut />} />
+          <Route path="/novo-cliente" element={< NewClient  />} />
+          <Route path="/novo-pedido" element={< NewOrder />} />
+          <Route path="/novo-bolo" element={< NewCake />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
