@@ -21,10 +21,10 @@ export default function NewEnter() {
     try {
       const signIn = await axios.post(`${process.env.REACT_APP_API_URL}/clients`, post)
       console.log(signIn.status)
-      goTo('/')
+      goTo('/home')
 
     } catch (error) {
-      if (error.name === "AxiosError") alert("We couldn't find an account with this data!")
+      if (error.name === "AxiosError") alert("não foi possivel cadastrar o cliente!")
     }
   }
 

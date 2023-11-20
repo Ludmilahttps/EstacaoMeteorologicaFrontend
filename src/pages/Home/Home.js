@@ -3,10 +3,26 @@ import { HistoricScreen, Feed, Transfers, Balance } from './style'
 import Header from "../../components/Header"
 import Footer from "../../components/Footer"
 import { UserContext } from "../../UserContext.js"
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
+import axios from "axios"
 
 function Home() {
-    const { historic } = useContext(UserContext)
+    const { info, historic, setHistoric } = useContext(UserContext)
+
+    useEffect(() => {
+        try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${info.token}`
+                }
+            }
+            const promise = axios.get(`${process.env.REACT_APP_API_URL}/post`, config);
+            promise.then(res => setHistoric(res.data))
+
+        } catch (error) {
+            if (error.name === "AxiosError") alert("We couldn't find an account with this data!")
+        }
+    }, [])
 
     let sale = 0;
 

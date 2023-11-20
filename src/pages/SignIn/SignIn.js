@@ -8,7 +8,7 @@ import { UserContext } from "../../UserContext.js"
  
 function LogIn() {
 
-    const { setInfo, setHistoric} = useContext(UserContext)
+    const { info, setInfo, setHistoric} = useContext(UserContext)
     const goTo =  useNavigate()
     const [userEmail, setEmail] = useState('')
     const [sentRequest, setSentRequest] = useState(false)
@@ -18,6 +18,7 @@ function LogIn() {
         e.preventDefault()
 
         setSentRequest(true)
+        setInfo({})
         setHistoric([])
 
         const post = {
@@ -28,8 +29,13 @@ function LogIn() {
         try {
             const signIn = await axios.post(`${process.env.REACT_APP_API_URL}/sign-in`, post)
             console.log(signIn.status)
+            const id = signIn.data.id
+            const token = signIn.data.token.replace("Bearer ", "")
 
-            if (signIn.status === 201 || signIn.status === 200) goTo('/home')
+            if (signIn.status === 201 || signIn.status === 200) {
+                setInfo({ id, token })
+                goTo('/home')
+            }
 
         } catch (error) {
             if (error.name === "AxiosError") alert("A senha ou o email está errado. Confira os dados!")
