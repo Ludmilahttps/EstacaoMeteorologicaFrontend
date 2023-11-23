@@ -3,11 +3,12 @@ import { HistoricScreen, Feed, Transfers, Balance } from './style'
 import Header from "../../components/Header"
 import Footer from "../../components/Footer"
 import { UserContext } from "../../UserContext.js"
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import axios from "axios"
+import { Chart } from "react-google-charts";
 
 function Home() {
-    const { info, historic, setHistoric } = useContext(UserContext)
+    const { info, order ,setOrders} = useContext(UserContext)
 
     useEffect(() => {
         try {
@@ -16,47 +17,54 @@ function Home() {
                     Authorization: `Bearer ${info.token}`
                 }
             }
-            const promise = axios.get(`${process.env.REACT_APP_API_URL}/post`, config);
-            promise.then(res => setHistoric(res.data))
-
+            // const promise = axios.get(`${process.env.REACT_APP_API_URL}/orders/${info.id}`, config);
+            // promise.then(res => setOrders(res.data))
+            console.log(info.id)
         } catch (error) {
             if (error.name === "AxiosError") alert("We couldn't find an account with this data!")
         }
     }, [])
 
-    let sale = 0;
-
-    for (let i = 0; i < historic.length; i++) {
-        if (historic[i].type === 'enter') {
-            sale = sale + Number(historic[i].value);
-        } else {
-            sale = sale - Number(historic[i].value);
-        }
-    }
-
-    
+    const [dataa, setDataa] = useState([
+        ['Linguagens', 'Quantidade'],
+        ['React', 100],
+        ['Angula', 80],
+        ['Vue', 50],
+      ])
+      const [options, setOptions] = useState({
+        title: 'Gráfico de Pizza'
+      })
+      const [dataBar, setDataBar] = useState([
+        ['Cidades', '2010 População', '2000 População'],
+        ['New York City, NY', 8175000, 8008000],
+        ['Los Angeles, CA', 3792000, 3694000],
+        ['Chicago, IL', 2695000, 2896000],
+        ['Houston, TX', 2099000, 1953000],
+        ['Philadelphia, PA', 1526000, 1517000],
+      ])
+      const [optionsBar, setOptionsBar] = useState({
+        title: 'Gráfico de Barra'
+      });
 
     return (
         <HistoricScreen>
-            <Header/>
-            <>{historic.length ? (
-                <Feed>
-                    <Transfers >
-                        {historic.map((transf) =>
-                            <section>
-                                <h1>{transf.date}</h1>
-                                <h2  data-test="registry-name" >{transf.description}</h2>
-                                {transf.type === 'enter' ? <h3 data-test="registry-amount">{transf.value}</h3> : <h4 data-test="registry-amount">{transf.value}</h4>}
-                            </section>
-                        )}
-                    </Transfers>
-                    <Balance>
-                        <p>BALANCE</p>
-                        {sale < 0 ? <h3 data-test="total-amount">{sale}</h3> : <h4 data-test="total-amount">{sale}</h4>}
-
-                    </Balance>
-                </Feed>
-            ) : <h1>There are no entry or exit records</h1>}</>
+            <Header ></Header>
+            <Feed>
+            <Chart
+            width={'500px'}
+            height={'300px'}
+            chartType="PieChart"
+            data={dataa}
+            options={options}
+          />
+          <Chart
+            width={'500px'}
+            height={'300px'}
+            chartType="BarChart"
+            data={dataBar}
+            options={optionsBar}
+          />
+            </Feed>
             <Footer />
         </HistoricScreen>
     )

@@ -29,11 +29,13 @@ function LogIn() {
         try {
             const signIn = await axios.post(`${process.env.REACT_APP_API_URL}/sign-in`, post)
             console.log(signIn.status)
+            console.log(signIn.data.position)
             const id = signIn.data.id
+            const position = signIn.data.position
             const token = signIn.data.token.replace("Bearer ", "")
 
             if (signIn.status === 201 || signIn.status === 200) {
-                setInfo({ id, token })
+                setInfo({ id, position,  token })
                 goTo('/home')
             }
 

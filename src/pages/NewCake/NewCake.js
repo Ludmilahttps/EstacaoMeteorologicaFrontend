@@ -53,7 +53,7 @@ export default function NewCake() {
           <input type="number" name="number" placeholder="preço" value={value} onChange={(e) => setValue(e.target.value)} />
           <input type="text" name="description" placeholder="descrição" value={description} onChange={(e) => setDescription(e.target.value)} />
           <input type="text" name="image" placeholder="link imagem" value={image} onChange={(e) => setImage(e.target.value)} />
-          <input type="text" name="categoria" placeholder="id categoria" value={categoria} onChange={(e) => setCategoria(e.target.value)} list="categorias" />
+          <input type="text" name="categoria" placeholder="categoria" value={categoria} onChange={(e) => setCategoria(e.target.value)} list="categorias" />
           <datalist id="categorias">{categoryOptions.map(option => (<option key={option.value} value={option.label} />))}</datalist>
           <button data-test="registry-save" type="submit">save</button>
         </form>
