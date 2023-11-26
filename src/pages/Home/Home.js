@@ -4,11 +4,16 @@ import Header from "../../components/Header"
 import Footer from "../../components/Footer"
 import { UserContext } from "../../UserContext.js"
 import { useContext, useEffect, useState } from 'react'
+import { Chart } from "react-google-charts"
 import axios from "axios"
-import { Chart } from "react-google-charts";
 
 function Home() {
-    const { info, order ,setOrders} = useContext(UserContext)
+    const { info } = useContext(UserContext)
+    const [sales, setSales] = useState("")
+    const [ingredients, setIngredients] = useState("")
+    const [cakes, setCakes] = useState("")
+    const [dataBar, setDataBar] = useState([]);
+    const [dataPie, setDataPie] = useState([]);
 
     useEffect(() => {
         try {
@@ -17,53 +22,155 @@ function Home() {
                     Authorization: `Bearer ${info.token}`
                 }
             }
-            // const promise = axios.get(`${process.env.REACT_APP_API_URL}/orders/${info.id}`, config);
-            // promise.then(res => setOrders(res.data))
-            console.log(info.id)
+            const promise = axios.get(`${process.env.REACT_APP_API_URL}/graphyc/sales`, config);
+            promise.then(res => setSales(res.data))
+            console.log(sales)
+
+            const promisee = axios.get(`${process.env.REACT_APP_API_URL}/graphyc/ingredients`, config);
+            promisee.then(res => setIngredients(res.data))
+            console.log(ingredients)
+
+            const promiseee = axios.get(`${process.env.REACT_APP_API_URL}/graphyc/city`, config);
+            promiseee.then(res => setCakes(res.data))
+            console.log(cakes)
+
+
         } catch (error) {
             if (error.name === "AxiosError") alert("We couldn't find an account with this data!")
         }
-    }, [])
+    }, [info.token])
 
-    const [dataa, setDataa] = useState([
-        ['Linguagens', 'Quantidade'],
-        ['React', 100],
-        ['Angula', 80],
-        ['Vue', 50],
-      ])
-      const [options, setOptions] = useState({
-        title: 'Gráfico de Pizza'
-      })
-      const [dataBar, setDataBar] = useState([
-        ['Cidades', '2010 População', '2000 População'],
-        ['New York City, NY', 8175000, 8008000],
-        ['Los Angeles, CA', 3792000, 3694000],
-        ['Chicago, IL', 2695000, 2896000],
-        ['Houston, TX', 2099000, 1953000],
-        ['Philadelphia, PA', 1526000, 1517000],
-      ])
-      const [optionsBar, setOptionsBar] = useState({
-        title: 'Gráfico de Barra'
-      });
+    useEffect(() => {
+        // Função para transformar os dados de cakes no formato necessário para o gráfico de barras
+        const transformData = () => {
+            const chartData = [['City', 'Sobremesa', 'Bolo de Festa']];
+
+            // Inicializa objetos para armazenar os totais por categoria e cidade
+            const totals = {};
+
+            cakes.forEach(({ city_name, category_name, total_cakes_sold }) => {
+                const numericValue = parseFloat(total_cakes_sold);
+
+                if (!isNaN(numericValue)) {
+                    if (!totals[city_name]) {
+                        totals[city_name] = {};
+                    }
+
+                    totals[city_name][category_name] = numericValue;
+                }
+            });
+
+            // Converte os totais armazenados em objetos para linhas no gráfico
+            for (const city in totals) {
+                const row = [city];
+
+                if (totals[city]['sobremesa']) {
+                    row.push(totals[city]['sobremesa']);
+                } else {
+                    row.push(0);
+                }
+
+                if (totals[city]['bolo de festa']) {
+                    row.push(totals[city]['bolo de festa']);
+                } else {
+                    row.push(0);
+                }
+
+                chartData.push(row);
+            }
+
+            setDataBar(chartData);
+        };
+
+        // Chama a função de transformação quando os dados de cakes são alterados
+        if (cakes && cakes.length > 0) {
+            transformData();
+        }
+    }, [cakes]);
+
+    useEffect(() => {
+        // Função para transformar os dados de ingredients no formato necessário para o gráfico de pizza
+        const transformPieData = () => {
+            const chartData = [['Ingredient', 'Quantity']];
+    
+            ingredients.forEach(({ name, quantity }) => {
+                const numericQuantity = parseFloat(quantity) || 0;
+    
+                chartData.push([name, numericQuantity]);
+            });
+    
+            console.log('Pie Chart Data:', chartData); // Adicionado console.log
+    
+            setDataPie(chartData);
+        };
+    
+        // Chama a função de transformação quando os dados de ingredients são alterados
+        if (ingredients && ingredients.length > 0) {
+            transformPieData();
+        }
+    }, [ingredients]);
+    
+    
+
+    const optionsBar = {
+        title: 'Total Cakes Sold by City and Category',
+        chartArea: { width: '50%' },
+        hAxis: {
+            title: 'City',
+            minValue: 0,
+        },
+        vAxis: {
+            title: 'Total Cakes Sold',
+        },
+        isStacked: true, // Adiciona barras empilhadas para cada categoria
+    };
+
+    const optionsPie = {
+        title: 'Ingredients Distribution',
+    };
+
+    console.log(info.position)
 
     return (
         <HistoricScreen>
             <Header ></Header>
             <Feed>
-            <Chart
-            width={'500px'}
-            height={'300px'}
-            chartType="PieChart"
-            data={dataa}
-            options={options}
-          />
-          <Chart
-            width={'500px'}
-            height={'300px'}
-            chartType="BarChart"
-            data={dataBar}
-            options={optionsBar}
-          />
+                <>{info.position = 1 ? (
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Chart
+                        width={'400px'}
+                        height={'300px'}
+                        chartType="BarChart"
+                        data={dataBar}
+                        options={optionsBar}
+                    />
+                    <Chart
+                        width={'400px'}
+                        height={'300px'}
+                        chartType="PieChart"
+                        data={dataPie}
+                        options={optionsPie}
+                    />
+                </div>
+                ) : (
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <Chart
+                            width={'400px'}
+                            height={'300px'}
+                            chartType="BarChart"
+                            data={dataBar}
+                            options={optionsBar}
+                        />
+                        <Chart
+                            width={'400px'}
+                            height={'300px'}
+                            chartType="PieChart"
+                            data={dataPie}
+                            options={optionsPie}
+                        />
+                    </div>
+                )}</>
+
             </Feed>
             <Footer />
         </HistoricScreen>
