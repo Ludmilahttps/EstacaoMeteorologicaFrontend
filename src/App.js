@@ -10,6 +10,7 @@ import Home from "./pages/Home/Home"
 import NewClient from "./pages/NewClient/NewClient"
 import NewOrder from "./pages/NewOrder/NewOrder"
 import NewCake from "./pages/NewCake/NewCake"
+import UpdateEmail from "./pages/email/UpdateEmail"
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/novo-cliente" element={< NewClient />} />
           <Route path="/novo-pedido" element={< NewOrder />} />
           <Route path="/novo-bolo" element={< NewCake />} />
+          <Route path="/atualizar-email" element={< UpdateEmail />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

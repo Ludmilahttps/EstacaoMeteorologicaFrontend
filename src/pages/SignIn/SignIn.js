@@ -7,8 +7,7 @@ import { ThreeDots } from 'react-loader-spinner'
 import { UserContext } from "../../UserContext.js"
  
 function LogIn() {
-
-    const { info, setInfo, setHistoric} = useContext(UserContext)
+    const { info, setInfo } = useContext(UserContext)
     const goTo =  useNavigate()
     const [userEmail, setEmail] = useState('')
     const [sentRequest, setSentRequest] = useState(false)
@@ -19,7 +18,6 @@ function LogIn() {
 
         setSentRequest(true)
         setInfo({})
-        setHistoric([])
 
         const post = {
             email: userEmail,
@@ -29,13 +27,25 @@ function LogIn() {
         try {
             const signIn = await axios.post(`${process.env.REACT_APP_API_URL}/sign-in`, post)
             console.log(signIn.status)
-            console.log(signIn.data.position)
+            console.log(signIn.data.position.positionid)
             const id = signIn.data.id
-            const position = signIn.data.position
+            const position = parseInt(signIn.data.position.positionid, 10);
+            console.log(position)
+
+            const positionID = +signIn.data.position.positionid;
+
+            // Acessando o valor de position diretamente
+            const positionValue = signIn.data.position;
+
+            // Agora você pode fazer o que quiser com positionId e positionValue
+            console.log('Position ID:', positionID);
+            console.log('Valor de Position:', positionValue);
+
             const token = signIn.data.token.replace("Bearer ", "")
 
             if (signIn.status === 201 || signIn.status === 200) {
-                setInfo({ id, position,  token })
+                setInfo({ id, positionID,  token })
+                console.log(info)
                 goTo('/home')
             }
 

@@ -18,6 +18,14 @@ function Footer() {
                 <ion-icon name="sparkles-outline"></ion-icon>
                 <p>Novo Bolo</p>
             </Link>
+            <Link to="/atualizar-email">
+                <ion-icon name="people-outline"></ion-icon>
+                <p>Atualizar email</p>
+            </Link>
+            <Link to="/novo-pedido">
+                <ion-icon name="receipt-outline"></ion-icon>
+                <p>Deletar pedido</p>
+            </Link>
         </Foot>
     )
 }

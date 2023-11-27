@@ -1,7 +1,7 @@
 import React from 'react'
-import { HistoricScreen, Feed, Transfers, Balance } from './style'
-import Header from "../../components/Header"
-import Footer from "../../components/Footer"
+import { HistoricScreen, Feed, Transfers, Balance } from './style.js'
+import Header from "../../components/Header.js"
+import Footer from "../../components/Footer.js"
 import { UserContext } from "../../UserContext.js"
 import { useContext, useEffect, useState } from 'react'
 import { Chart } from "react-google-charts"
@@ -129,13 +129,13 @@ function Home() {
         title: 'Ingredients Distribution',
     };
 
-    console.log(info.positionID)
+    console.log(info.position)
 
     return (
         <HistoricScreen>
             <Header ></Header>
             <Feed>
-                <>{info.positionID == 1 ? (
+                <>{info.position = 1 ? (
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Chart
                         width={'400px'}
@@ -143,6 +143,13 @@ function Home() {
                         chartType="BarChart"
                         data={dataBar}
                         options={optionsBar}
+                    />
+                    <Chart
+                        width={'400px'}
+                        height={'300px'}
+                        chartType="PieChart"
+                        data={dataPie}
+                        options={optionsPie}
                     />
                 </div>
                 ) : (
