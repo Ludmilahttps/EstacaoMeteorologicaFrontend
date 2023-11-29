@@ -33,8 +33,6 @@ function Home() {
             const promiseee = axios.get(`${process.env.REACT_APP_API_URL}/graphyc/city`, config);
             promiseee.then(res => setCakes(res.data))
             console.log(cakes)
-
-
         } catch (error) {
             if (error.name === "AxiosError") alert("We couldn't find an account with this data!")
         }
@@ -81,36 +79,54 @@ function Home() {
 
             setDataBar(chartData);
         };
-
-        // Chama a função de transformação quando os dados de cakes são alterados
         if (cakes && cakes.length > 0) {
             transformData();
         }
+
     }, [cakes]);
 
     useEffect(() => {
-        // Função para transformar os dados de ingredients no formato necessário para o gráfico de pizza
         const transformPieData = () => {
             const chartData = [['Ingredient', 'Quantity']];
-    
-            ingredients.forEach(({ name, quantity }) => {
-                const numericQuantity = parseFloat(quantity) || 0;
-    
-                chartData.push([name, numericQuantity]);
+
+            ingredients.forEach(({ ingredient_name, total_quantity }) => {
+                // Verifica se ingredient_name e total_quantity são definidos antes de adicionar ao gráfico
+                if (ingredient_name && total_quantity) {
+                    const numericQuantity = parseFloat(total_quantity) || 0;
+                    chartData.push([ingredient_name, numericQuantity]);
+                }
             });
-    
-            console.log('Pie Chart Data:', chartData); // Adicionado console.log
-    
             setDataPie(chartData);
         };
-    
-        // Chama a função de transformação quando os dados de ingredients são alterados
+
         if (ingredients && ingredients.length > 0) {
             transformPieData();
         }
+
     }, [ingredients]);
+
+    const dataSales = [['Employee', 'Total Sales']];
+
+    if (Array.isArray(sales)) {
+      sales.forEach(({ employee_name, total_sales }) => {
+        dataSales.push([employee_name, parseInt(total_sales)]);
+      });
+    } else {
+      console.error('Sales data is not an array:', sales);
+    }
     
-    
+
+    const optionsSales = {
+        title: 'Total Sales by Employee',
+        chartArea: { width: '50%' },
+        hAxis: {
+            title: 'Employee',
+            minValue: 0,
+        },
+        vAxis: {
+            title: 'Total Sales',
+        },
+    };
 
     const optionsBar = {
         title: 'Total Cakes Sold by City and Category',
@@ -137,14 +153,14 @@ function Home() {
             <Feed>
                 <>{info.positionID == 1 ? (
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Chart
-                        width={'400px'}
-                        height={'300px'}
-                        chartType="BarChart"
-                        data={dataBar}
-                        options={optionsBar}
-                    />
-                </div>
+                        <Chart
+                            width={'400px'}
+                            height={'300px'}
+                            chartType="BarChart"
+                            data={dataSales}
+                            options={optionsSales}
+                        />
+                    </div>
                 ) : (
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Chart

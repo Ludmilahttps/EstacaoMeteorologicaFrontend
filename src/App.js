@@ -11,6 +11,7 @@ import NewClient from "./pages/NewClient/NewClient"
 import NewOrder from "./pages/NewOrder/NewOrder"
 import NewCake from "./pages/NewCake/NewCake"
 import UpdateEmail from "./pages/email/UpdateEmail"
+import DeleteOrder from "./pages/OrderDelete/DeleteOrder"
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/novo-pedido" element={< NewOrder />} />
           <Route path="/novo-bolo" element={< NewCake />} />
           <Route path="/atualizar-email" element={< UpdateEmail />} />
+          <Route path="/deletar-pedido" element={< DeleteOrder />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

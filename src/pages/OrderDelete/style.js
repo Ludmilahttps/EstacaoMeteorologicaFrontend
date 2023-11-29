@@ -33,18 +33,6 @@ export const Feed= styled.div
     flex-direction: column;
 `
 
-// export const Chart= styled.div
-// `
-//     width: 100%;
-//     height: 100%;
-//     display: flex;
-//     align-items: center;
-//     justify-context: center;
-//     flex-direction: column;
-//     padding: 15px;
-// }
-// `
-
 export const Balance= styled.div
 `
     width: 100%;

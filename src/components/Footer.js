@@ -22,7 +22,7 @@ function Footer() {
                 <ion-icon name="people-outline"></ion-icon>
                 <p>Atualizar email</p>
             </Link>
-            <Link to="/novo-pedido">
+            <Link to="/deletar-pedido">
                 <ion-icon name="receipt-outline"></ion-icon>
                 <p>Deletar pedido</p>
             </Link>

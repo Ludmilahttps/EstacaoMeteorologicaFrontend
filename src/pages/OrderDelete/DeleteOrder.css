@@ -1,0 +1,47 @@
+/* Adicione este CSS ao seu arquivo de estilos */
+.order-table-container {
+    margin: 20px;
+  }
+  
+  .order-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .order-table th, .order-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .order-table th {
+    background-color: #D9304F;
+    color: white;
+  }
+  
+ /* Adicione este CSS ao seu arquivo de estilos */
+ .delete-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: #D9304F;
+    border: 2px solid #D9304F;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 30px;
+    height: 30px;
+  }
+  
+  .delete-button:hover {
+    background-color: #D9304F;
+    color: white;
+  }
+  
+  
+  .delete-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }

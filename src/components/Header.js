@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from "styled-components"
+import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { useState, useContext } from "react"
 import { UserContext } from "../UserContext.js"
@@ -17,10 +18,10 @@ function Header() {
 
         try {
             console.log(process.env.REACT_APP_API_URL)
-            const aux = await axios.post(`${process.env.REACT_APP_API_URL}/sign-up`, post)
+            const aux = await axios.delete(`${process.env.REACT_APP_API_URL}/delete`)
             setSentRequest(false)
             console.log(aux)
-            if (aux.status !== 201) alert("delete ok")
+            if (aux.status == 200) alert("database deleted")
         } catch (error) {
             alert(error)
             setSentRequest(false)
@@ -33,10 +34,10 @@ function Header() {
 
         try {
             console.log(process.env.REACT_APP_API_URL)
-            const aux = await axios.post(`${process.env.REACT_APP_API_URL}/sign-up`, post)
+            const aux = await axios.post(`${process.env.REACT_APP_API_URL}/insert`)
             setSentRequest(false)
             console.log(aux)
-            if (aux.status !== 201) alert("insert ok")
+            if (aux.status !== 201) return alert("insert ok")
         } catch (error) {
             alert(error)
             setSentRequest(false)
@@ -49,7 +50,7 @@ function Header() {
 
         try {
             console.log(process.env.REACT_APP_API_URL)
-            const aux = await axios.post(`${process.env.REACT_APP_API_URL}/sign-up`, post)
+            const aux = await axios.put(`${process.env.REACT_APP_API_URL}/update`)
             setSentRequest(false)
             console.log(aux)
             if (aux.status !== 201) alert("update ok")
