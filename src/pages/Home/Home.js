@@ -41,7 +41,7 @@ function Home() {
     useEffect(() => {
         // Função para transformar os dados de cakes no formato necessário para o gráfico de barras
         const transformData = () => {
-            const chartData = [['City', 'Sobremesa', 'Bolo de Festa']];
+            const chartData = [['Cidade', 'Sobremesa', 'Bolo de Festa', 'Bolo Simples']];
 
             // Inicializa objetos para armazenar os totais por categoria e cidade
             const totals = {};
@@ -74,6 +74,12 @@ function Home() {
                     row.push(0);
                 }
 
+                if (totals[city]['bolo simples']) {
+                    row.push(totals[city]['bolo simples']);
+                } else {
+                    row.push(0);
+                }
+
                 chartData.push(row);
             }
 
@@ -87,7 +93,7 @@ function Home() {
 
     useEffect(() => {
         const transformPieData = () => {
-            const chartData = [['Ingredient', 'Quantity']];
+            const chartData = [['Ingrediente', 'Quantidade']];
 
             ingredients.forEach(({ ingredient_name, total_quantity }) => {
                 // Verifica se ingredient_name e total_quantity são definidos antes de adicionar ao gráfico
@@ -105,19 +111,19 @@ function Home() {
 
     }, [ingredients]);
 
-    const dataSales = [['Employee', 'Total Sales']];
+    const dataSales = [['funcionário', 'Total de vendas']];
 
     if (Array.isArray(sales)) {
       sales.forEach(({ employee_name, total_sales }) => {
         dataSales.push([employee_name, parseInt(total_sales)]);
       });
     } else {
-      console.error('Sales data is not an array:', sales);
+      console.error('Não temos vendas cadastradas no ultimo mes:', sales);
     }
     
 
     const optionsSales = {
-        title: 'Total Sales by Employee',
+        title: 'Total de vendas por Funcionário',
         chartArea: { width: '50%' },
         hAxis: {
             title: 'Employee',
@@ -129,20 +135,20 @@ function Home() {
     };
 
     const optionsBar = {
-        title: 'Total Cakes Sold by City and Category',
+        title: 'Total de Bolos vendidos por Cidade e Categoria',
         chartArea: { width: '50%' },
         hAxis: {
-            title: 'City',
+            title: 'Total de Bolos vendidos',
             minValue: 0,
         },
         vAxis: {
-            title: 'Total Cakes Sold',
+            title: 'Cidades',
         },
         isStacked: true, // Adiciona barras empilhadas para cada categoria
     };
 
     const optionsPie = {
-        title: 'Ingredients Distribution',
+        title: 'Quantidade de ingredientes usados esse mes',
     };
 
     console.log(info.positionID)

@@ -32,6 +32,7 @@ export default function NewCake() {
       image: image,
       categoryid: categoria
     }
+    console.log(categoria)
 
     try {
       const signIn = await axios.post(`${process.env.REACT_APP_API_URL}/cakes`, post)
@@ -54,7 +55,7 @@ export default function NewCake() {
           <input type="text" name="description" placeholder="descrição" value={description} onChange={(e) => setDescription(e.target.value)} />
           <input type="text" name="image" placeholder="link imagem" value={image} onChange={(e) => setImage(e.target.value)} />
           <input type="text" name="categoria" placeholder="categoria" value={categoria} onChange={(e) => setCategoria(e.target.value)} list="categorias" />
-          <datalist id="categorias">{categoryOptions.map(option => (<option key={option.value} value={option.label} />))}</datalist>
+          <datalist id="categorias">{categoryOptions.map(option => (<option key={option.value} value={option.value} />))}</datalist>
           <button data-test="registry-save" type="submit">save</button>
         </form>
       </Container>
