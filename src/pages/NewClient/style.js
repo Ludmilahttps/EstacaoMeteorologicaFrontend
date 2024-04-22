@@ -6,11 +6,14 @@ height: 100%;
 width: 326px;
 margin-top: 25px;
 display: flex;
-flex-direction: column;
+flex-direction: 
+column;
 >h1{
+    font-family: "Raleway";
     font-weight: 700;
     font-size: 26px;
-    color: #D9304F;
+    color: #193946;
+    text-align: center;
 }
 >form{
     >input{
@@ -47,7 +50,7 @@ flex-direction: column;
         width: 326px;
         height: 46px;
         border-style: none;
-        background: #D9304F;
+        background: #0B928C;
         border-radius: 5px;
         border-style: none;
         margin-top: 15px;

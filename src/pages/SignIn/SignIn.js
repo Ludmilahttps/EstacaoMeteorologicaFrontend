@@ -57,8 +57,8 @@ function LogIn() {
 
     return (
         <Form>
-            <img data-test="logout" src="../../assets/Laboleria.svg"></img>
-            <p data-test="user-name">LaBoleria</p>
+            <img data-test="logout" src="../../assets/EstacaoMeteorologica.svg"></img>
+            <p data-test="user-name">Estação Meteorógica UFSC-Aru </p>
             <input data-test="email" type="email" name="email" placeholder="email" disabled={sentRequest} onChange={(e) => setEmail(e.currentTarget.value)}/>
             <input test="password" type="password" name="password" placeholder="senha" disabled={sentRequest} onChange={(e) => setPassword(e.currentTarget.value)}/>
             <button data-test="sign-in-submit" type='submit' disabled={sentRequest}  onClick={(e) => sendLogin(e)}>{sentRequest ? <ThreeDots height="18" width="30" color="white" ariaLabel="loading" wrapperStyle={{}} wrapperClassName=""/> : "LogIn" }</button>

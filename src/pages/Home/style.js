@@ -11,14 +11,14 @@ export const HistoricScreen = styled.div
     left: 0;
     padding: 0;
     border-radius: 5px;
-    border: 25px solid #F2ACBF;
+    border: 25px solid #F49A23;
     display: flex;
     align-items: center;
     justify-context: center;
     > h1 {
         font-family: 'Lexend Deca';
         font-size: 23px;
-        color: #D9304F;
+        color: #193946;
         margin-top: 17px;
         margin-bottom: 17px;
     }

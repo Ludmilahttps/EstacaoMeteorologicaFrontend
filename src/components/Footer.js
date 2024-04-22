@@ -46,7 +46,7 @@ export const Foot = styled.footer
     > a {
         width: 40%;
         height: 114px;
-        background-color: #D9304F;
+        background-color: #0B928C;
         border-radius: 5px;
         text-decoration: none;
         text-align: center;

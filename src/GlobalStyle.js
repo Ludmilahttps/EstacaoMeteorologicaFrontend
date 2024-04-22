@@ -30,7 +30,7 @@ const GlobalStyle = createGlobalStyle
     body {
         line-height: 1;
         margin: 70px 0;
-        background-color: #F2ACBF;
+        background-color: #F7EEE0;
         display: flex;
         flex-direction: column;
         justify-context: center;

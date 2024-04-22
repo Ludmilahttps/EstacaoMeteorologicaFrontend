@@ -62,8 +62,8 @@ function Header() {
 
     return (
         <Head data-test="header">
-            <Logo data-test="logout" src="../../assets/Laboleria.svg" />
-            <p data-test="user-name">LaBoleria</p>
+            <Logo data-test="logout" src="../../assets/EstacaoMeteorologica.svg" />
+            <p data-test="user-name">Estação Meteorológica UFSC-Aru</p>
             <Boo>
                 <Button disabled={sentRequest} onClick={(e) => updateDatabase(e)}>
                     <ion-icon name="sync-outline"></ion-icon>
@@ -84,7 +84,7 @@ export default Header
 export const Head = styled.div
     `
     width: 100%;
-    height: 78px;
+    height: 70px;
     position: fixed;
     top: 0; left: 0;
     z-index: 1;
@@ -96,14 +96,14 @@ export const Head = styled.div
     font-style: normal;
     font-weight: 700;
     font-size: 26px;
-    line-height: 31px;
-    color: #D9304F;
+    line-height: 21px;
+    color: #193946;
 `
 
 export const Logo = styled.img
     `
-    width: 52px;
-    height: 64px;
+    width: 80px;
+    height: 80px;
     margin-left: 15px;
     margin-right: 10px;
 `

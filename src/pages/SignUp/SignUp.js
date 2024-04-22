@@ -51,8 +51,8 @@ function NewAccount() {
 
     return (
         <New>
-            <img data-test="logout" src="../../assets/Laboleria.svg"></img>
-            <p data-test="user-name">LaBoleria</p>
+            <img data-test="logout" src="../../assets/EstacaoMeteorologica.svg"></img>
+            <p data-test="user-name">Estação Meteorológica UFSC-Aru</p>
             <input data-test="email" type="email" name="email" placeholder="email" disabled={sentRequest} onChange={(e) => setEmail(e.currentTarget.value)} />
             <input data-test="name" type="name" name="name" placeholder="name" disabled={sentRequest} onChange={(e) => setName(e.currentTarget.value)} />
             

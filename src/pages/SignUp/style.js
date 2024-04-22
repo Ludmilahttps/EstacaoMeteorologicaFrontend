@@ -14,14 +14,14 @@ export const New = styled.div
     font-weight: 700;
     font-size: 26px;
     line-height: 31px;
-    color: #D9304F;
+    color: #193946;
     > p {
         margin: 10px;
     }
     > img {
-        width: 102px;
-        height: 164px;
-        margin: -15px;
+        width: 300px;
+        height: 300px;
+        margin: -40px;
     }
     > input {
         width: 303px;
@@ -37,7 +37,7 @@ export const New = styled.div
         width: 303px;
         height: 45px;
         box-sizing: border-box;
-        background: #D9304F;
+        background: #0B928C;
         border-radius: 4.63636px;
         border: none;
         font-family: 'Raleway';
@@ -66,7 +66,7 @@ export const New = styled.div
         line-height: 18px;
         text-align: center;
         text-decoration-line: underline;
-        color: #fff;
+        color: #0B928C;
         margin: 22px;
         cursor: pointer;
     }
