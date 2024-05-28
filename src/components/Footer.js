@@ -6,9 +6,9 @@ function Footer() {
 
     return (
         <Foot  data-test="menu">
-            <Link data-test="new-income" to="/novo-cliente">
-                <ion-icon name="people-outline"></ion-icon>
-                <p>Novo Cliente</p>
+            <Link to="/novo-dado-dht">
+                <ion-icon name="sparkles-outline"></ion-icon>
+                <p>Inserir Dados DHT</p>
             </Link>
             <Link data-test="new-expense" to="/novo-pedido">
                 <ion-icon name="receipt-outline"></ion-icon>

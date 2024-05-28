@@ -7,7 +7,7 @@ import { UserContext } from './UserContext'
 import SignIn from "./pages/SignIn/SignIn"
 import SignUp from "./pages/SignUp/SignUp"
 import Home from "./pages/Home/Home"
-import NewClient from "./pages/NewClient/NewClient"
+import NewDataDHT from "./pages/NewDataDHT/NewDataDHT"
 import NewOrder from "./pages/NewOrder/NewOrder"
 import NewCake from "./pages/NewCake/NewCake"
 import UpdateEmail from "./pages/email/UpdateEmail"
@@ -26,7 +26,7 @@ function App() {
           <Route path="/" element={< SignIn />} />
           <Route path="/cadastro" element={< SignUp />} />
           <Route path="/home" element={<  Home />} />
-          <Route path="/novo-cliente" element={< NewClient />} />
+          <Route path="/novo-dado-dht" element={< NewDataDHT />} />
           <Route path="/novo-pedido" element={< NewOrder />} />
           <Route path="/novo-bolo" element={< NewCake />} />
           <Route path="/atualizar-email" element={< UpdateEmail />} />
