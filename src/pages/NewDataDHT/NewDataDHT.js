@@ -33,7 +33,7 @@ export default function NewDataDHT() {
       <Container>
         <h1>Novo Cliente</h1>
         <form onSubmit={sendLogin}>
-          <input type="text" name="data" placeholder="data" value={value} onChange={(e) => setData(e.target.value)} />
+          <input type="text" name="data" placeholder="data" value={data} onChange={(e) => setData(e.target.value)} />
           <input type="text" name="temperatura" placeholder="temperatura" value={temperatura} onChange={(e) => setTemperatura(e.target.value)} />
           <input type="text" name="umidade" placeholder="umidade" value={umidade} onChange={(e) => setUmidade(e.target.value)} />
           <button type="submit">cadastrar</button>
