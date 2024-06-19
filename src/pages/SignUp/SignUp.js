@@ -35,7 +35,7 @@ function NewAccount() {
             cpf: userCpf,
             email: userEmail,
             name: userName,
-            position: position,
+            position: parseInt(position),
             password: userPassword
         }
         console.log(post)
