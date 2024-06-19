@@ -11,13 +11,15 @@ function NewAccount() {
     const [userEmail, setEmail] = useState('')
     const [userName, setName] = useState('')
     const [userPassword, setPassword] = useState('')
+    const [userCpf, setCpf] = useState('')
     const [userConfirmPassword, setConfirmPassword] = useState('')
     const [position, setPosition] = useState('')
     const [sentRequest, setSentRequest] = useState(false)
 
     const positionOptions = [
-        { label: '1. Vendedor', value: 1 },
-        { label: '2. CEO', value: 2 },
+        { label: '1. administrador', value: "administrador" },
+        { label: '2. professor', value: "professor" },
+        { label: '3. aluno', value: "aluno" },
       ];
 
     async function sendLogin(e) {
@@ -32,6 +34,7 @@ function NewAccount() {
         const post = {
             email: userEmail,
             name: userName,
+            cpf: userCpf,
             position: position,
             password: userPassword
         }
@@ -55,6 +58,8 @@ function NewAccount() {
             <p data-test="user-name">Estação Meteorológica UFSC-Aru</p>
             <input data-test="email" type="email" name="email" placeholder="email" disabled={sentRequest} onChange={(e) => setEmail(e.currentTarget.value)} />
             <input data-test="name" type="name" name="name" placeholder="name" disabled={sentRequest} onChange={(e) => setName(e.currentTarget.value)} />
+            <input data-test="cpf" type="cpf" name="cpf" placeholder="cpf" disabled={sentRequest} onChange={(e) => setCpf(e.currentTarget.value)} />
+            
             
             <input type="text" name="position" placeholder="position" value={position} onChange={(e) => setPosition(e.target.value)} list="positions" />
             <datalist id="positions">{positionOptions.map(option => (<option key={option.value} value={option.value} />))}</datalist>
