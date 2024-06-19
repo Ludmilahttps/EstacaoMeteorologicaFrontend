@@ -38,7 +38,7 @@ function NewAccount() {
             position: position,
             password: userPassword
         }
-
+        console.log(post)
         try {
             console.log(process.env.REACT_APP_API_URL)
             const aux = await axios.post(`${process.env.REACT_APP_API_URL}/sign-up`, post)
