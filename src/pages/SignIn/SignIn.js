@@ -10,6 +10,7 @@ function LogIn() {
     const { info, setInfo } = useContext(UserContext)
     const goTo =  useNavigate()
     const [userEmail, setEmail] = useState('')
+    const [userCpf, setCpf] = useState('')
     const [sentRequest, setSentRequest] = useState(false)
     const [userPassword, setPassword] = useState('')
 
@@ -20,7 +21,7 @@ function LogIn() {
         setInfo({})
 
         const post = {
-            email: userEmail,
+            cpf: userCpf,
             password: userPassword
         }
 
@@ -53,18 +54,27 @@ function LogIn() {
             if (error.name === "AxiosError") alert("A senha ou o email está errado. Confira os dados!")
             setSentRequest(false)
         }
+
+        const handleCpfChange = (e) => {
+            let value = e.currentTarget.value;
+            value = value.replace(/\D/g, ''); // Remove tudo o que não é dígito
+            value = value.replace(/(\d{3})(\d)/, '$1.$2'); // Coloca ponto entre o terceiro e o quarto dígitos
+            value = value.replace(/(\d{3})(\d)/, '$1.$2'); // Coloca ponto entre o sexto e o sétimo dígitos
+            value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Coloca hífen entre o nono e o décimo dígitos
+            setCpf(value);
+        };
     }
 
     return (
         <Form>
             <img data-test="logout" src="../../assets/EstacaoMeteorologica.svg"></img>
             <p data-test="user-name">Estação Meteorógica UFSC-Aru </p>
-            <input data-test="email" type="email" name="email" placeholder="email" disabled={sentRequest} onChange={(e) => setEmail(e.currentTarget.value)}/>
+            <input data-test="cpf" type="text" name="cpf" placeholder="CPF" disabled={sentRequest} onChange={handleCpfChange}/>
             <input test="password" type="password" name="password" placeholder="senha" disabled={sentRequest} onChange={(e) => setPassword(e.currentTarget.value)}/>
             <button data-test="sign-in-submit" type='submit' disabled={sentRequest}  onClick={(e) => sendLogin(e)}>{sentRequest ? <ThreeDots height="18" width="30" color="white" ariaLabel="loading" wrapperStyle={{}} wrapperClassName=""/> : "LogIn" }</button>
-            <Link data-test="signup-link" to="/cadastro">
+            {/* <Link data-test="signup-link" to="/cadastro">
                 Don't have an account? Register
-            </Link>
+            </Link> */}
         </Form>
     )
 }
