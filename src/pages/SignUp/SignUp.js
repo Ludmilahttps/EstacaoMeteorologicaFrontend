@@ -17,9 +17,9 @@ function NewAccount() {
     const [sentRequest, setSentRequest] = useState(false)
 
     const positionOptions = [
-        { label: 'administrador', value: "1" },
-        { label: 'professor', value: "2" },
-        { label: 'aluno', value: "3" },
+        { label: 'professor', value: "1" },
+        { label: 'aluno', value: "2" },
+        { label: 'pesquisador', value: "3" },
       ];
 
     async function sendLogin(e) {
