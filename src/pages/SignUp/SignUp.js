@@ -20,6 +20,7 @@ function NewAccount() {
         { label: 'professor', value: "1" },
         { label: 'aluno', value: "2" },
         { label: 'pesquisador', value: "3" },
+
       ];
 
     async function sendLogin(e) {
@@ -65,9 +66,8 @@ function NewAccount() {
                 </datalist>
                 <input data-test="password" type="password" name="password" placeholder="password" disabled={sentRequest} onChange={(e) => setPassword(e.target.value)} required />
                 <input data-test="conf-password" type="password" name="confirm-password" placeholder="password confirm" disabled={sentRequest} onChange={(e) => setConfirmPassword(e.target.value)} required />
-                <button data-test="sign-up-submit" type="submit" disabled={sentRequest}>
-                    {sentRequest ? <ThreeDots height="18" width="30" color="white" ariaLabel="loading" /> : "Register"}
-                </button>
+                <button data-test="sign-up-submit" type='submit' disabled={sentRequest} onClick={(e) => sendLogin(e)}>{sentRequest ? <ThreeDots height="18" width="30" color="white" ariaLabel="loading" wrapperStyle={{}} wrapperClassName="" /> : "Register"}</button>
+
         </New>
     );
     // return (
