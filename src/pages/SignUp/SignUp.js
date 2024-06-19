@@ -52,27 +52,27 @@ function NewAccount() {
         }
     }
 
-    return (
-        <New>
-            <img data-test="logout" src="../../assets/EstacaoMeteorologica.svg" alt="Estação Meteorológica UFSC-Aru" />
-            <p data-test="user-name">Estação Meteorológica UFSC-Aru</p>
-            <form onSubmit={sendLogin}>
-                <input data-test="email" type="email" name="email" placeholder="email" disabled={sentRequest} onChange={(e) => setEmail(e.target.value)} required />
-                <input data-test="name" type="text" name="name" placeholder="name" disabled={sentRequest} onChange={(e) => setName(e.target.value)} required />
-                <input data-test="cpf" type="text" name="cpf" placeholder="cpf" disabled={sentRequest} onChange={(e) => setCpf(e.target.value)} required />
-                <input type="text" name="position" placeholder="position" value={position} onChange={(e) => setPosition(e.target.value)} list="positions" required />
-                <datalist id="positions">
-                    {positionOptions.map(option => (<option key={option.value} value={option.value}>{option.label}</option>))}
-                </datalist>
-                <input data-test="password" type="password" name="password" placeholder="password" disabled={sentRequest} onChange={(e) => setPassword(e.target.value)} required />
-                <input data-test="conf-password" type="password" name="confirm-password" placeholder="password confirm" disabled={sentRequest} onChange={(e) => setConfirmPassword(e.target.value)} required />
-                <button data-test="sign-up-submit" type="submit" disabled={sentRequest}>
-                    {sentRequest ? <ThreeDots height="18" width="30" color="white" ariaLabel="loading" /> : "Register"}
-                </button>
-            </form>
-            <Link to="/">Already have an account? LogIn</Link>
-        </New>
-    );
+    // return (
+    //     <New>
+    //         <img data-test="logout" src="../../assets/EstacaoMeteorologica.svg" alt="Estação Meteorológica UFSC-Aru" />
+    //         <p data-test="user-name">Estação Meteorológica UFSC-Aru</p>
+    //         <form onSubmit={sendLogin}>
+    //             <input data-test="email" type="email" name="email" placeholder="email" disabled={sentRequest} onChange={(e) => setEmail(e.target.value)} required />
+    //             <input data-test="name" type="text" name="name" placeholder="name" disabled={sentRequest} onChange={(e) => setName(e.target.value)} required />
+    //             <input data-test="cpf" type="text" name="cpf" placeholder="cpf" disabled={sentRequest} onChange={(e) => setCpf(e.target.value)} required />
+    //             <input type="text" name="position" placeholder="position" value={position} onChange={(e) => setPosition(e.target.value)} list="positions" required />
+    //             <datalist id="positions">
+    //                 {positionOptions.map(option => (<option key={option.value} value={option.value}>{option.label}</option>))}
+    //             </datalist>
+    //             <input data-test="password" type="password" name="password" placeholder="password" disabled={sentRequest} onChange={(e) => setPassword(e.target.value)} required />
+    //             <input data-test="conf-password" type="password" name="confirm-password" placeholder="password confirm" disabled={sentRequest} onChange={(e) => setConfirmPassword(e.target.value)} required />
+    //             <button data-test="sign-up-submit" type="submit" disabled={sentRequest}>
+    //                 {sentRequest ? <ThreeDots height="18" width="30" color="white" ariaLabel="loading" /> : "Register"}
+    //             </button>
+    //         </form>
+    //         <Link to="/">Already have an account? LogIn</Link>
+    //     </New>
+    // );
     return (
         <New>
             <img data-test="logout" src="../../assets/EstacaoMeteorologica.svg"></img>
@@ -92,7 +92,7 @@ function NewAccount() {
                 Already have an account? LogIn
             </Link>
         </New>
-    )
+    );
 }
 
 export default NewAccount
