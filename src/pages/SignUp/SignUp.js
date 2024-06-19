@@ -32,9 +32,9 @@ function NewAccount() {
         }
 
         const post = {
+            cpf: userCpf,
             email: userEmail,
             name: userName,
-            cpf: userCpf,
             position: position,
             password: userPassword
         }
