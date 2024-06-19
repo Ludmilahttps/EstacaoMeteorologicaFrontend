@@ -17,9 +17,9 @@ function NewAccount() {
     const [sentRequest, setSentRequest] = useState(false)
 
     const positionOptions = [
-        { label: '1. administrador', value: "administrador" },
-        { label: '2. professor', value: "professor" },
-        { label: '3. aluno', value: "aluno" },
+        { label: '1', value: "administrador" },
+        { label: '2', value: "professor" },
+        { label: '3', value: "aluno" },
       ];
 
     async function sendLogin(e) {
@@ -61,7 +61,7 @@ function NewAccount() {
             <input data-test="cpf" type="cpf" name="cpf" placeholder="cpf" disabled={sentRequest} onChange={(e) => setCpf(e.currentTarget.value)} />
             
             
-            <input type="text" name="position" placeholder="position" value={position} onChange={(e) => setPosition(e.target.value)} list="positions" />
+            <input type="text" name="position" placeholder="position" value={position} onChange={(e) => setPosition(e.target.value.label)} list="positions" />
             <datalist id="positions">{positionOptions.map(option => (<option key={option.value} value={option.value} />))}</datalist>
             
             <input data-test="password" type="password" name="password" placeholder="password" disabled={sentRequest} onChange={(e) => setPassword(e.currentTarget.value)} />
