@@ -1,57 +1,56 @@
-import { useState, useContext } from "react"
-import { Container } from "./style.js"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import { UserContext } from "../../UserContext.js"
+import { useState, useContext } from "react";
+import { Container } from "./style.js";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../UserContext.js";
 
 export default function NewOrder() {
-  const goTo = useNavigate()
-  const [client, setClient] = useState("")
-  const [cake, setCake] = useState("")
-  const [value, setValue] = useState("")
+  const goTo = useNavigate();
+  const [idStation, setIdStation] = useState("");
+  const [rainfall, setRainfall] = useState("");
 
-  const { info } = useContext(UserContext)
+  const { info } = useContext(UserContext);
 
   async function sendLogin(e) {
-    e.preventDefault()
-
-    // "clientId": "1",
-    // "cakeId": "1",
-    // "quantity": "1"
+    e.preventDefault();
 
     const post = {
-      clientid: client,
-      cakeid: cake,
-      quantity: value,
+      idStation: idStation.trim(),
+      rainfall: rainfall.trim(),
       employeeid: info.id
-    }
+    };
 
-    console.log(post)
-    let priceTotal = 0
+    console.log(post);
     try {
-      const newOrder = await axios.post(`${process.env.REACT_APP_API_URL}/orders`, post)
-      console.log(newOrder.data)
-      if (newOrder.data && newOrder.data.totalprice !== undefined) {
-        priceTotal = newOrder.data.totalprice;
-        goTo('/home');
-        alert("O valor total da compra foi de: R$ " + priceTotal  + ",00");
-      }
+      const newOrder = await axios.post(`${process.env.REACT_APP_API_URL}/orders`, post);
+      console.log(newOrder.data);
+      goTo('/home');
+      alert("Pedido registrado com sucesso");
     } catch (error) {
-      if (error.name === "AxiosError") alert("Não foi possível cadastrar esse pedido, confira os dados")
+      if (error.name === "AxiosError") alert("Não foi possível cadastrar esse pedido, confira os dados");
     }
   }
 
   return (
-    <>
-      <Container>
-        <h1>Novo Pedido</h1>
-        <form onSubmit={sendLogin}>
-          <input type="number" name="ClientId" placeholder="id cliente" value={client} onChange={(e) => setClient(e.target.value)}/>
-          <input type="number" name="CakeId" placeholder="id bolo" value={cake} onChange={(e) => setCake(e.target.value)} />
-          <input type="number" name="Value" placeholder="quantidade" value={value} onChange={(e) => setValue(e.target.value)} />
-          <button type="submit">Registrar</button>
-        </form>
-      </Container>
-    </>
-  )
+    <Container>
+      <h1>Inserir Dados Pluviometer</h1>
+      <form onSubmit={sendLogin}>
+        <input
+          type="text"
+          name="idStation"
+          placeholder="ID da Estação"
+          value={idStation}
+          onChange={(e) => setIdStation(e.target.value)}
+        />
+        <input
+          type="text"
+          name="rainfall"
+          placeholder="Precipitação (mm)"
+          value={rainfall}
+          onChange={(e) => setRainfall(e.target.value)}
+        />
+        <button type="submit">Registrar</button>
+      </form>
+    </Container>
+  );
 }

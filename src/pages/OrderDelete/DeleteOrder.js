@@ -1,96 +1,74 @@
-import React, { useEffect, useState, useContext } from 'react';
-import axios from 'axios';
-import { HistoricScreen, Feed } from './style.js';
-import { UserContext } from '../../UserContext.js';
-import './DeleteOrder.css'; 
+import { useState, useContext } from "react";
+import { Container } from "./style.js";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../UserContext.js";
 
-function DeleteOrder() {
-    const { info } = useContext(UserContext);
-    const [orders, setOrders] = useState([]);
-    const [loading, setLoading] = useState(false);
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const config = {
-            headers: {
-              Authorization: `Bearer ${info.token}`,
-            },
-          };
-          const response = await axios.get(`${process.env.REACT_APP_API_URL}/orders`, config);
-          setOrders(response.data);
-        } catch (error) {
-          if (error.name === 'AxiosError') {
-            alert("We couldn't find an account with this data!");
-          }
-        }
-      };
-  
-      fetchData();
-    }, [info.token]);
-  
-    const handleDeleteOrder = async (orderId) => {
-      try {
-        const config = {
-          headers: {
-            Authorization: `Bearer ${info.token}`,
-          },
-        };
-  
-        setLoading(true);
-        await axios.delete(`${process.env.REACT_APP_API_URL}/orders/${orderId}`, config);
-        // Atualizar a lista de pedidos após a exclusão
-        const updatedOrders = orders.filter((order) => order.orderId !== orderId);
-        setOrders(updatedOrders);
-      } catch (error) {
-        if (error.name === 'AxiosError') {
-          alert('Error deleting the order. Please try again.');
-        }
-      } finally {
-        setLoading(false);
-      }
+export default function NewOrder() {
+  const goTo = useNavigate();
+  const [idStation, setIdStation] = useState("");
+  const [pressure, setPressure] = useState("");
+  const [temperature, setTemperature] = useState("");
+  const [altitude, setAltitude] = useState("");
+
+  const { info } = useContext(UserContext);
+
+  async function sendOrder(e) {
+    e.preventDefault();
+
+    const post = {
+      idStation: idStation.trim(),
+      pressure: pressure.trim(),
+      temperature: temperature.trim(),
+      altitude: altitude.trim(),
+      employeeid: info.id
     };
-  
-    return (
-        <HistoricScreen>
-          <Feed>
-            <div className="order-table-container">
-              <table className="order-table">
-                <thead>
-                  <tr>
-                    <th>Pedido</th>
-                    <th>Cliente</th>
-                    <th>Bolo</th>
-                    <th>Quantidade</th>
-                    <th>Preço Total</th>
-                    <th>Data do pedido</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map((order) => (
-                    <tr key={order.orderId}>
-                      <td>{order.orderId}</td>
-                      <td>{order.client.name}</td>
-                      <td>{order.cake.name}</td>
-                      <td>{order.quantity}</td>
-                      <td>{order.totalPrice}</td>
-                      <td>{new Date(order.createdat).toLocaleString()}</td>
-                        <button
-                          onClick={() => handleDeleteOrder(order.orderId)}
-                          disabled={loading}
-                          className="delete-button"
-                        >
-                          <p>X</p>
-                        </button>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </Feed>
-        </HistoricScreen>
-      );
+
+    console.log(post);
+    try {
+      const newOrder = await axios.post(`${process.env.REACT_APP_API_URL}/orders`, post);
+      console.log(newOrder.data);
+      goTo('/home');
+      alert("Pedido registrado com sucesso");
+    } catch (error) {
+      if (error.name === "AxiosError") alert("Não foi possível cadastrar esse pedido, confira os dados");
     }
-  
-  export default DeleteOrder;
-  
+  }
+
+  return (
+    <Container>
+      <h1>Novo Pedido</h1>
+      <form onSubmit={sendOrder}>
+        <input
+          type="text"
+          name="idStation"
+          placeholder="ID da Estação"
+          value={idStation}
+          onChange={(e) => setIdStation(e.target.value)}
+        />
+        <input
+          type="text"
+          name="pressure"
+          placeholder="Pressão"
+          value={pressure}
+          onChange={(e) => setPressure(e.target.value)}
+        />
+        <input
+          type="text"
+          name="temperature"
+          placeholder="Temperatura"
+          value={temperature}
+          onChange={(e) => setTemperature(e.target.value)}
+        />
+        <input
+          type="text"
+          name="altitude"
+          placeholder="Altitude"
+          value={altitude}
+          onChange={(e) => setAltitude(e.target.value)}
+        />
+        <button type="submit">Registrar</button>
+      </form>
+    </Container>
+  );
+}

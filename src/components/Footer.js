@@ -12,11 +12,11 @@ function Footer() {
             </Link>
             <Link data-test="new-expense" to="/novo-pedido">
                 <ion-icon name="receipt-outline"></ion-icon>
-                <p>Novo Pedido</p>
+                <p>Inserir Dados Pluviometer</p>
             </Link>
             <Link data-test="new-expense" to="/novo-bolo">
                 <ion-icon name="sparkles-outline"></ion-icon>
-                <p>Novo Bolo</p>
+                <p>Inserir Dados Anemometro</p>
             </Link>
             <Link to="/atualizar-email">
                 <ion-icon name="people-outline"></ion-icon>
@@ -24,7 +24,7 @@ function Footer() {
             </Link>
             <Link to="/deletar-pedido">
                 <ion-icon name="receipt-outline"></ion-icon>
-                <p>Deletar pedido</p>
+                <p>Inserir Dados BMP</p>
             </Link>
         </Foot>
     )
