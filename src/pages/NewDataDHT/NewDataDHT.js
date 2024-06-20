@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 export default function NewDataDHT() {
   const goTo = useNavigate()
-  const [data, setData] = useState("")
+  const [idStation, setIdStation] = useState("")
   const [temperatura, setTemperatura] = useState("")
   const [umidade, setUmidade] = useState("")
 
@@ -13,9 +13,9 @@ export default function NewDataDHT() {
     e.preventDefault()
 
     const post = {
-      data: data,
-      temperatura: temperatura,
-      umidade: umidade
+      idStation: idStation,
+      temperature: temperatura,
+      humidity: umidade
     }
 
     try {
@@ -33,7 +33,7 @@ export default function NewDataDHT() {
       <Container>
         <h1>Cadastrar Dados do DHT</h1>
         <form onSubmit={sendLogin}>
-          <input type="text" name="data" placeholder="data" value={data} onChange={(e) => setData(e.target.value)} />
+          <input type="text" name="idStation" placeholder="estação" value={idStation} onChange={(e) => setIdStation(e.target.value)} />
           <input type="text" name="temperatura" placeholder="temperatura" value={temperatura} onChange={(e) => setTemperatura(e.target.value)} />
           <input type="text" name="umidade" placeholder="umidade" value={umidade} onChange={(e) => setUmidade(e.target.value)} />
           <button type="submit">cadastrar</button>
