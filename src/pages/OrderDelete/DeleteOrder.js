@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Container } from "./style.js";
+import { HistoricScreen } from "./style.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserContext.js";
@@ -36,7 +36,7 @@ export default function NewOrder() {
   }
 
   return (
-    <Container>
+    <HistoricScreen>
       <h1>Novo Pedido</h1>
       <form onSubmit={sendOrder}>
         <input
@@ -69,6 +69,6 @@ export default function NewOrder() {
         />
         <button type="submit">Registrar</button>
       </form>
-    </Container>
+    </HistoricScreen>
   );
 }
