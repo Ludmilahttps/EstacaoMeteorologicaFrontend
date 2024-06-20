@@ -33,7 +33,7 @@ export default function NewOrder() {
 
   return (
     <Container>
-      <h1>Inserir Dados Pluviometer</h1>
+      <h1>Inserir Dados Pluviometro</h1>
       <form onSubmit={sendLogin}>
         <input
           type="text"

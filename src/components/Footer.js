@@ -12,7 +12,7 @@ function Footer() {
             </Link>
             <Link data-test="new-expense" to="/novo-pedido">
                 <ion-icon name="receipt-outline"></ion-icon>
-                <p>Inserir Dados Pluviometer</p>
+                <p>Inserir Dados Pluviometro</p>
             </Link>
             <Link data-test="new-expense" to="/novo-bolo">
                 <ion-icon name="sparkles-outline"></ion-icon>

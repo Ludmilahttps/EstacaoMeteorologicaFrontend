@@ -1,71 +1,92 @@
 import styled from "styled-components"
 
-export const HistoricScreen = styled.div
+export const Container = styled.div
 `
-    background-color: #FFF;
-    display: flex;
-    position: fixed;
-    flex-direction: column;
-    width: 100%;
-    height: 80%;
-    left: 0;
-    padding: 0;
-    border-radius: 5px;
-    border: 25px solid #F2A33B;
-    display: flex;
-    align-items: center;
-    justify-context: center;
-    > h1 {
-        font-family: 'Lexend Deca';
-        font-size: 23px;
-        color: #193946;
-        margin-top: 17px;
-        margin-bottom: 17px;
+height: 100%;
+width: 326px;
+margin-top: 25px;
+display: flex;
+flex-direction: column;
+>h1{
+    font-family: "Raleway";
+    font-weight: 700;
+    font-size: 26px;
+    color: #193946;
+    text-align: center;
+}
+>form{
+    >input{
+        width: 326px;
+        height: 58px;
+        background: #ffffff;
+        border-radius: 5px;
+        border-style: none;
+        margin-top: 15px;
+        padding-left: 15px;
+        box-sizing: border-box;
+        font-size: 20px;
+        font-family: "Raleway";
+        /* Chrome, Safari, Edge, Opera */
+        ::-webkit-outer-spin-button,
+        ::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+        /* Firefox */
+        [type="number"] {
+        -moz-appearance: textfield;
+        }
+        ::placeholder {
+        font-family: "Raleway";
+        font-size: 20px;
+        color: #4f4f4f;
+        }
+        :focus::placeholder {
+        color: transparent;
+        }
     }
-`
-export const Feed= styled.div
-`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-context: center;
-    flex-direction: column;
-`
-
-export const Balance= styled.div
-`
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 35px;
-    padding-right: 35px;
-    padding-bottom: 10px;
-    > p{
-        font-family: 'Raleway';
+    > button{
+        width: 326px;
+        height: 46px;
+        border-style: none;
+        background: #0B928C;
+        border-radius: 5px;
+        border-style: none;
+        margin-top: 15px;
+        font-family: "Raleway";
         font-weight: 700;
-        font-size: 22px;
-        line-height: 20px;
-        color: #000000;
+        font-size: 20px;
+        color: #ffffff;
     }
-    > h3{
-        font-family: 'Raleway';
-        font-weight: 400;
-        font-size: 22px;
-        line-height: 20px;
-        text-align: right;
-        color: #C70000;
+    >output{
+        width: 326px;
+        height: 58px;
+        background: #ffffff;
+        border-radius: 5px;
+        border-style: none;
+        margin-top: 15px;
+        padding-left: 15px;
+        box-sizing: border-box;
+        font-size: 20px;
+        font-family: "Raleway";
+        /* Chrome, Safari, Edge, Opera */
+        ::-webkit-outer-spin-button,
+        ::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+        /* Firefox */
+        [type="number"] {
+        -moz-appearance: textfield;
+        }
+        ::placeholder {
+        font-family: "Raleway";
+        font-size: 20px;
+        color: #4f4f4f;
+        }
+        :focus::placeholder {
+        color: transparent;
+        }
     }
-    > h4{
-        font-family: 'Raleway';
-        font-weight: 400;
-        font-size: 22px;
-        line-height: 20px;
-        text-align: right;
-        color:#03AC00;
     }
 `
