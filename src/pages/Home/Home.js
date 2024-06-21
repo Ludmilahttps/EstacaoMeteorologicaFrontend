@@ -18,19 +18,19 @@ function Home() {
     const [bmpData, setBmpData] = useState([]);
     const [forecast, setForecast] = useState(null);
 
-    useEffect(() => {
-        // Fetch the list of stations
-        const fetchStations = async () => {
-            try {
-                const response = await axios.get(`/stations`);
-                setStations(response.data);
-            } catch (error) {
-                console.error("Error fetching stations: ", error);
-            }
-        };
+    // useEffect(() => {
+    //     // Fetch the list of stations
+    //     const fetchStations = async () => {
+    //         try {
+    //             const response = await axios.get(`/stations`);
+    //             setStations(response.data);
+    //         } catch (error) {
+    //             console.error("Error fetching stations: ", error);
+    //         }
+    //     };
 
-        fetchStations();
-    }, []);
+    //     fetchStations();
+    // }, []);
 
     const fetchData = async () => {
         try {
