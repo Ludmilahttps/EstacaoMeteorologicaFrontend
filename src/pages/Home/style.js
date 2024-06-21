@@ -91,7 +91,6 @@ export const ControlPanel = styled.div`
     width: 100%;
     background-color: #193946;
     padding: 10px;
-    border-radius: 8px;
     color: white;
     font-family: 'Raleway', sans-serif;
 `
