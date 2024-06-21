@@ -17,8 +17,6 @@ function Home() {
     const [anemometerData, setAnemometerData] = useState([]);
     const [bmpData, setBmpData] = useState([]);
     const [forecast, setForecast] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
         // Fetch the list of stations
@@ -28,7 +26,6 @@ function Home() {
                 setStations(response.data);
             } catch (error) {
                 console.error("Error fetching stations: ", error);
-                setError("Error fetching stations");
             }
         };
 
@@ -36,8 +33,6 @@ function Home() {
     }, []);
 
     const fetchData = async () => {
-        setLoading(true);
-        setError(null);
         try {
             const responses = await Promise.all([
                 axios.get("/dhtGet", { params: { startDate, endDate, station } }),
@@ -54,9 +49,6 @@ function Home() {
             calculateForecast(responses[0].data);
         } catch (error) {
             console.error("Error fetching data: ", error);
-            setError("Error fetching data");
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -68,60 +60,57 @@ function Home() {
         }
     };
 
-    const calculateForecast = (dhtData) => {
-        if (dhtData.length > 0) {
-            const lastEntry = dhtData[dhtData.length - 1];
-            setForecast({
-                temperature: lastEntry.temperature + Math.random() * 2 - 1,
-                humidity: lastEntry.humidity + Math.random() * 2 - 1
-            });
-        }
-    };
+    // const calculateForecast = (dhtData) => {
+    //     if (dhtData.length > 0) {
+    //         const lastEntry = dhtData[dhtData.length - 1];
+    //         setForecast({
+    //             temperature: lastEntry.temperature + Math.random() * 2 - 1,
+    //             humidity: lastEntry.humidity + Math.random() * 2 - 1
+    //         });
+    //     }
+    // };
 
-    const formatDataForChart = (data, labels) => {
-        const chartData = [labels];
-        data.forEach(entry => {
-            const row = [new Date(entry.timestamp), ...labels.slice(1).map(label => entry[label.toLowerCase()])];
-            chartData.push(row);
-        });
-        return chartData;
-    };
+    // const formatDataForChart = (data, labels) => {
+    //     const chartData = [labels];
+    //     data.forEach(entry => {
+    //         const row = [new Date(entry.timestamp), ...labels.slice(1).map(label => entry[label.toLowerCase()])];
+    //         chartData.push(row);
+    //     });
+    //     return chartData;
+    // };
 
     return (
         <HistoricScreen>
             <Header />
             <Feed>
-                <div style={{ margin: '20px 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <div style={{ marginBottom: '15px' }}>
-                        <label style={{ marginRight: '10px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}>
+                <div >
+                    <div >
+                        <label>
                             Data Inicial:
                         </label>
                         <input 
                             type="date" 
                             value={startDate} 
                             onChange={e => setStartDate(e.target.value)} 
-                            style={{ padding: '5px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}
                         />
                     </div>
-                    <div style={{ marginBottom: '15px' }}>
-                        <label style={{ marginRight: '10px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}>
+                    <div >
+                        <label >
                             Data Final:
                         </label>
                         <input 
                             type="date" 
                             value={endDate} 
                             onChange={e => setEndDate(e.target.value)} 
-                            style={{ padding: '5px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}
                         />
                     </div>
-                    <div style={{ marginBottom: '15px' }}>
-                        <label style={{ marginRight: '10px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}>
+                    <div>
+                        <label>
                             Estação:
                         </label>
                         <select 
                             value={station} 
                             onChange={e => setStation(e.target.value)} 
-                            style={{ padding: '5px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}
                         >
                             <option value="">Selecione uma Estação</option>
                             {stations.map((station) => (
@@ -133,76 +122,63 @@ function Home() {
                     </div>
                     <button 
                         onClick={handleFetchData} 
-                        style={{ padding: '10px 20px', fontSize: '16px', fontFamily: 'Arial, sans-serif', cursor: 'pointer' }}
                     >
                         Buscar Dados
                     </button>
+                 </div>
+                {/*<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+                    <Chart
+                        width={'400px'}
+                        height={'300px'}
+                        chartType="LineChart"
+                        data={formatDataForChart(dhtData, ['Time', 'Temperature', 'Humidity'])}
+                        options={{
+                            title: 'Dados de Temperatura e Umidade',
+                            hAxis: { title: 'Time' },
+                            vAxis: { title: 'Values' },
+                        }}
+                    />
+                    <Chart
+                        width={'400px'}
+                        height={'300px'}
+                        chartType="LineChart"
+                        data={formatDataForChart(pluviometerData, ['Time', 'Rainfall'])}
+                        options={{
+                            title: 'Dados de Pluviometria',
+                            hAxis: { title: 'Time' },
+                            vAxis: { title: 'Rainfall (mm)' },
+                        }}
+                    />
+                    <Chart
+                        width={'400px'}
+                        height={'300px'}
+                        chartType="LineChart"
+                        data={formatDataForChart(anemometerData, ['Time', 'WindSpeed'])}
+                        options={{
+                            title: 'Dados de Velocidade do Vento',
+                            hAxis: { title: 'Time' },
+                            vAxis: { title: 'Wind Speed (m/s)' },
+                        }}
+                    />
+                    <Chart
+                        width={'400px'}
+                        height={'300px'}
+                        chartType="LineChart"
+                        data={formatDataForChart(bmpData, ['Time', 'Pressure'])}
+                        options={{
+                            title: 'Dados de Pressão',
+                            hAxis: { title: 'Time' },
+                            vAxis: { title: 'Pressure (hPa)' },
+                        }}
+                    />
                 </div>
-                {loading && <p>Carregando...</p>}
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                {!loading && !error && (
-                    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
-                        {dhtData.length > 0 && (
-                            <Chart
-                                width={'400px'}
-                                height={'300px'}
-                                chartType="LineChart"
-                                data={formatDataForChart(dhtData, ['Time', 'Temperature', 'Humidity'])}
-                                options={{
-                                    title: 'Dados de Temperatura e Umidade',
-                                    hAxis: { title: 'Time' },
-                                    vAxis: { title: 'Values' },
-                                }}
-                            />
-                        )}
-                        {pluviometerData.length > 0 && (
-                            <Chart
-                                width={'400px'}
-                                height={'300px'}
-                                chartType="LineChart"
-                                data={formatDataForChart(pluviometerData, ['Time', 'Rainfall'])}
-                                options={{
-                                    title: 'Dados de Pluviometria',
-                                    hAxis: { title: 'Time' },
-                                    vAxis: { title: 'Rainfall (mm)' },
-                                }}
-                            />
-                        )}
-                        {anemometerData.length > 0 && (
-                            <Chart
-                                width={'400px'}
-                                height={'300px'}
-                                chartType="LineChart"
-                                data={formatDataForChart(anemometerData, ['Time', 'WindSpeed'])}
-                                options={{
-                                    title: 'Dados de Velocidade do Vento',
-                                    hAxis: { title: 'Time' },
-                                    vAxis: { title: 'Wind Speed (m/s)' },
-                                }}
-                            />
-                        )}
-                        {bmpData.length > 0 && (
-                            <Chart
-                                width={'400px'}
-                                height={'300px'}
-                                chartType="LineChart"
-                                data={formatDataForChart(bmpData, ['Time', 'Pressure'])}
-                                options={{
-                                    title: 'Dados de Pressão',
-                                    hAxis: { title: 'Time' },
-                                    vAxis: { title: 'Pressure (hPa)' },
-                                }}
-                            />
-                        )}
-                    </div>
-                )}
                 {forecast && (
                     <div style={{ marginTop: '20px', textAlign: 'center' }}>
                         <h3>Previsão do Tempo</h3>
                         <p>Temperatura: {forecast.temperature.toFixed(2)}°C</p>
                         <p>Umidade: {forecast.humidity.toFixed(2)}%</p>
                     </div>
-                )}
+                )} */}
             </Feed>
             <Footer />
         </HistoricScreen>
