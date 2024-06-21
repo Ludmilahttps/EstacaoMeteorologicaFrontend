@@ -83,37 +83,34 @@ function Home() {
         <HistoricScreen>
             <Header />
             <Feed>
-                <div style={{ margin: '20px 0', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <div style={{ marginBottom: '15px' }}>
-                        <label style={{ marginRight: '10px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}>
+                <div >
+                    <div >
+                        <label>
                             Data Inicial:
                         </label>
                         <input 
                             type="date" 
                             value={startDate} 
                             onChange={e => setStartDate(e.target.value)} 
-                            style={{ padding: '5px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}
                         />
                     </div>
-                    <div style={{ marginBottom: '15px' }}>
-                        <label style={{ marginRight: '10px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}>
+                    <div >
+                        <label >
                             Data Final:
                         </label>
                         <input 
                             type="date" 
                             value={endDate} 
                             onChange={e => setEndDate(e.target.value)} 
-                            style={{ padding: '5px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}
                         />
                     </div>
-                    <div style={{ marginBottom: '15px' }}>
-                        <label style={{ marginRight: '10px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}>
+                    <div>
+                        <label>
                             Estação:
                         </label>
                         <select 
                             value={station} 
                             onChange={e => setStation(e.target.value)} 
-                            style={{ padding: '5px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}
                         >
                             <option value="">Selecione uma Estação</option>
                             {stations.map((station) => (
@@ -125,12 +122,11 @@ function Home() {
                     </div>
                     <button 
                         onClick={handleFetchData} 
-                        style={{ padding: '10px 20px', fontSize: '16px', fontFamily: 'Arial, sans-serif', cursor: 'pointer' }}
                     >
                         Buscar Dados
                     </button>
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+                 </div>
+                {/*<div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
                     <Chart
                         width={'400px'}
                         height={'300px'}
@@ -182,7 +178,7 @@ function Home() {
                         <p>Temperatura: {forecast.temperature.toFixed(2)}°C</p>
                         <p>Umidade: {forecast.humidity.toFixed(2)}%</p>
                     </div>
-                )}
+                )} */}
             </Feed>
             <Footer />
         </HistoricScreen>
