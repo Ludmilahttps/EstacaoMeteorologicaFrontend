@@ -26,7 +26,7 @@ function Home() {
         // Fetch the list of stations
         const fetchStations = async () => {
             try {
-                const response = await axios.get(`/api/stations`);
+                const response = await axios.get(`/stations`);
                 setStations(response.data);
             } catch (error) {
                 console.error("Error fetching stations: ", error);
