@@ -81,3 +81,58 @@ export const Balance= styled.div
         color:#03AC00;
     }
 `
+
+export const ControlPanel = styled.div`
+    margin: 20px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-color: #193946;
+    padding: 10px;
+    border-radius: 8px;
+    color: white;
+    font-family: 'Raleway', sans-serif;
+`
+
+export const ControlItem = styled.div`
+    margin-bottom: 15px;
+`
+
+export const Label = styled.label`
+    margin-right: 10px;
+    font-size: 16px;
+`
+
+export const Input = styled.input`
+    padding: 5px;
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+    border: none;
+    border-radius: 4px;
+`
+
+export const Select = styled.select`
+    padding: 5px;
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+    border: none;
+    border-radius: 4px;
+`
+
+export const Button = styled.button`
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: 'Raleway', sans-serif;
+    cursor: pointer;
+    background-color: #F49A23;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #0B928C;
+    }
+`
