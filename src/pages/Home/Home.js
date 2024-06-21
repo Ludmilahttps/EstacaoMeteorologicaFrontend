@@ -1,195 +1,120 @@
-import React from 'react'
-import { HistoricScreen, Feed, Transfers, Balance } from './style'
-import Header from "../../components/Header"
-import Footer from "../../components/Footer"
-import { UserContext } from "../../UserContext.js"
-import { useContext, useEffect, useState } from 'react'
-import { Chart } from "react-google-charts"
-import axios from "axios"
+import React, { useContext, useEffect, useState } from 'react';
+import { HistoricScreen, Feed } from './style';
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import { UserContext } from "../../UserContext.js";
+import { Chart } from "react-google-charts";
+import axios from "axios";
 
 function Home() {
-    const { info } = useContext(UserContext)
-    const [sales, setSales] = useState("")
-    const [ingredients, setIngredients] = useState("")
-    const [cakes, setCakes] = useState("")
+    const { info } = useContext(UserContext);
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [station, setStation] = useState("");
+    const [sensorData, setSensorData] = useState([]);
     const [dataBar, setDataBar] = useState([]);
     const [dataPie, setDataPie] = useState([]);
+    const [forecast, setForecast] = useState(null);
 
-    useEffect(() => {
+    const fetchData = async () => {
         try {
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${info.token}`
+            const response = await axios.get(`/dhtGet`, {
+                params: {
+                    startDate: startDate,
+                    endDate: endDate,
+                    station: station
                 }
-            }
-            const promise = axios.get(`${process.env.REACT_APP_API_URL}/graphyc/sales`, config);
-            promise.then(res => setSales(res.data))
-            console.log(sales)
-
-            const promisee = axios.get(`${process.env.REACT_APP_API_URL}/graphyc/ingredients`, config);
-            promisee.then(res => setIngredients(res.data))
-            console.log(ingredients)
-
-            const promiseee = axios.get(`${process.env.REACT_APP_API_URL}/graphyc/city`, config);
-            promiseee.then(res => setCakes(res.data))
-            console.log(cakes)
+            });
+            setSensorData(response.data);
+            // Process the data to generate chart data
+            processChartData(response.data);
+            // Calculate forecast based on the data
+            calculateForecast(response.data);
         } catch (error) {
-            if (error.name === "AxiosError") alert("We couldn't find an account with this data!")
+            console.error("Error fetching data: ", error);
         }
-    }, [info.token])
+    };
 
-    useEffect(() => {
-        // Função para transformar os dados de cakes no formato necessário para o gráfico de barras
-        const transformData = () => {
-            const chartData = [['Cidade', 'Sobremesa', 'Bolo de Festa', 'Bolo Simples']];
+    const processChartData = (data) => {
+        // Transform the sensor data to the format required by the charts
+        // Assuming data is an array of objects with timestamp and sensor readings
+        const chartData = [['Time', 'Temperature', 'Humidity']];
+        data.forEach(({ timestamp, temperature, humidity }) => {
+            chartData.push([new Date(timestamp), temperature, humidity]);
+        });
+        setDataBar(chartData);
+    };
 
-            // Inicializa objetos para armazenar os totais por categoria e cidade
-            const totals = {};
-
-            cakes.forEach(({ city_name, category_name, total_cakes_sold }) => {
-                const numericValue = parseFloat(total_cakes_sold);
-
-                if (!isNaN(numericValue)) {
-                    if (!totals[city_name]) {
-                        totals[city_name] = {};
-                    }
-
-                    totals[city_name][category_name] = numericValue;
-                }
+    const calculateForecast = (data) => {
+        // Implement a simple forecast calculation based on the sensor data
+        if (data.length > 0) {
+            const lastEntry = data[data.length - 1];
+            setForecast({
+                temperature: lastEntry.temperature + Math.random() * 2 - 1, // Simple random fluctuation
+                humidity: lastEntry.humidity + Math.random() * 2 - 1
             });
-
-            // Converte os totais armazenados em objetos para linhas no gráfico
-            for (const city in totals) {
-                const row = [city];
-
-                if (totals[city]['sobremesa']) {
-                    row.push(totals[city]['sobremesa']);
-                } else {
-                    row.push(0);
-                }
-
-                if (totals[city]['bolo de festa']) {
-                    row.push(totals[city]['bolo de festa']);
-                } else {
-                    row.push(0);
-                }
-
-                if (totals[city]['bolo simples']) {
-                    row.push(totals[city]['bolo simples']);
-                } else {
-                    row.push(0);
-                }
-
-                chartData.push(row);
-            }
-
-            setDataBar(chartData);
-        };
-        if (cakes && cakes.length > 0) {
-            transformData();
         }
+    };
 
-    }, [cakes]);
-
-    useEffect(() => {
-        const transformPieData = () => {
-            const chartData = [['Ingrediente', 'Quantidade']];
-
-            ingredients.forEach(({ ingredient_name, total_quantity }) => {
-                // Verifica se ingredient_name e total_quantity são definidos antes de adicionar ao gráfico
-                if (ingredient_name && total_quantity) {
-                    const numericQuantity = parseFloat(total_quantity) || 0;
-                    chartData.push([ingredient_name, numericQuantity]);
-                }
-            });
-            setDataPie(chartData);
-        };
-
-        if (ingredients && ingredients.length > 0) {
-            transformPieData();
+    const handleFetchData = () => {
+        if (startDate && endDate && station) {
+            fetchData();
+        } else {
+            alert("Por favor, preencha todas as informações para buscar os dados.");
         }
-
-    }, [ingredients]);
-
-    const dataSales = [['funcionário', 'Total de vendas']];
-
-    if (Array.isArray(sales)) {
-      sales.forEach(({ employee_name, total_sales }) => {
-        dataSales.push([employee_name, parseInt(total_sales)]);
-      });
-    } else {
-      console.error('Não temos vendas cadastradas no ultimo mes:', sales);
-    }
-    
-
-    const optionsSales = {
-        title: 'Total de vendas por Funcionário',
-        chartArea: { width: '50%' },
-        hAxis: {
-            title: 'Employee',
-            minValue: 0,
-        },
-        vAxis: {
-            title: 'Total Sales',
-        },
     };
 
     const optionsBar = {
-        title: 'Total de Bolos vendidos por Cidade e Categoria',
+        title: 'Dados dos Sensores',
         chartArea: { width: '50%' },
         hAxis: {
-            title: 'Total de Bolos vendidos',
+            title: 'Time',
             minValue: 0,
         },
         vAxis: {
-            title: 'Cidades',
+            title: 'Values',
         },
-        isStacked: true, // Adiciona barras empilhadas para cada categoria
     };
-
-    const optionsPie = {
-        title: 'Quantidade de ingredientes usados esse mes',
-    };
-
-    console.log(info.positionID)
 
     return (
         <HistoricScreen>
-            <Header ></Header>
+            <Header />
             <Feed>
-                <>{info.positionID == 1 ? (
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Chart
-                            width={'400px'}
-                            height={'300px'}
-                            chartType="BarChart"
-                            data={dataSales}
-                            options={optionsSales}
-                        />
+                <div style={{ margin: '20px 0' }}>
+                    <label>
+                        Data Inicial:
+                        <input type="date" value={startDate} onChange={e => setStartDate(e.target.value)} />
+                    </label>
+                    <label>
+                        Data Final:
+                        <input type="date" value={endDate} onChange={e => setEndDate(e.target.value)} />
+                    </label>
+                    <label>
+                        Estação:
+                        <input type="text" value={station} onChange={e => setStation(e.target.value)} />
+                    </label>
+                    <button onClick={handleFetchData}>Buscar Dados</button>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Chart
+                        width={'400px'}
+                        height={'300px'}
+                        chartType="BarChart"
+                        data={dataBar}
+                        options={optionsBar}
+                    />
+                </div>
+                {forecast && (
+                    <div>
+                        <h3>Previsão do Tempo</h3>
+                        <p>Temperatura: {forecast.temperature.toFixed(2)}°C</p>
+                        <p>Umidade: {forecast.humidity.toFixed(2)}%</p>
                     </div>
-                ) : (
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Chart
-                            width={'400px'}
-                            height={'300px'}
-                            chartType="BarChart"
-                            data={dataBar}
-                            options={optionsBar}
-                        />
-                        <Chart
-                            width={'400px'}
-                            height={'300px'}
-                            chartType="PieChart"
-                            data={dataPie}
-                            options={optionsPie}
-                        />
-                    </div>
-                )}</>
-
+                )}
             </Feed>
             <Footer />
         </HistoricScreen>
-    )
+    );
 }
 
-export default Home
+export default Home;
