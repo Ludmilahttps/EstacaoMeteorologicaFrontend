@@ -12,9 +12,10 @@ function Home() {
     const [endDate, setEndDate] = useState("");
     const [station, setStation] = useState("");
     const [stations, setStations] = useState([]);
-    const [sensorType, setSensorType] = useState("dht"); // Default to DHT sensor
-    const [sensorData, setSensorData] = useState([]);
-    const [chartData, setChartData] = useState([]);
+    const [dhtData, setDhtData] = useState([]);
+    const [pluviometerData, setPluviometerData] = useState([]);
+    const [anemometerData, setAnemometerData] = useState([]);
+    const [bmpData, setBmpData] = useState([]);
     const [forecast, setForecast] = useState(null);
 
     useEffect(() => {
@@ -33,61 +34,21 @@ function Home() {
 
     const fetchData = async () => {
         try {
-            const endpointMap = {
-                dht: "/dhtGet",
-                pluviometer: "/pluviometerGet",
-                anemometer: "/anemometerGet",
-                bmp: "/bmpGet"
-            };
+            const responses = await Promise.all([
+                axios.get("/dhtGet", { params: { startDate, endDate, station } }),
+                axios.get("/pluviometerGet", { params: { startDate, endDate, station } }),
+                axios.get("/anemometerGet", { params: { startDate, endDate, station } }),
+                axios.get("/bmpGet", { params: { startDate, endDate, station } })
+            ]);
 
-            const response = await axios.get(endpointMap[sensorType], {
-                params: {
-                    startDate: startDate,
-                    endDate: endDate,
-                    station: station
-                }
-            });
-            setSensorData(response.data);
-            processChartData(response.data);
-            calculateForecast(response.data);
+            setDhtData(responses[0].data);
+            setPluviometerData(responses[1].data);
+            setAnemometerData(responses[2].data);
+            setBmpData(responses[3].data);
+
+            calculateForecast(responses[0].data);
         } catch (error) {
             console.error("Error fetching data: ", error);
-        }
-    };
-
-    const processChartData = (data) => {
-        const chartDataMap = {
-            dht: [['Time', 'Temperature', 'Humidity']],
-            pluviometer: [['Time', 'Rainfall']],
-            anemometer: [['Time', 'Wind Speed']],
-            bmp: [['Time', 'Pressure']]
-        };
-
-        data.forEach((entry) => {
-            const timestamp = new Date(entry.timestamp);
-            if (sensorType === "dht") {
-                chartDataMap.dht.push([timestamp, entry.temperature, entry.humidity]);
-            } else if (sensorType === "pluviometer") {
-                chartDataMap.pluviometer.push([timestamp, entry.rainfall]);
-            } else if (sensorType === "anemometer") {
-                chartDataMap.anemometer.push([timestamp, entry.windSpeed]);
-            } else if (sensorType === "bmp") {
-                chartDataMap.bmp.push([timestamp, entry.pressure]);
-            }
-        });
-
-        setChartData(chartDataMap[sensorType]);
-    };
-
-    const calculateForecast = (data) => {
-        if (data.length > 0) {
-            const lastEntry = data[data.length - 1];
-            if (sensorType === "dht") {
-                setForecast({
-                    temperature: lastEntry.temperature + Math.random() * 2 - 1,
-                    humidity: lastEntry.humidity + Math.random() * 2 - 1
-                });
-            }
         }
     };
 
@@ -99,27 +60,23 @@ function Home() {
         }
     };
 
-    const chartOptionsMap = {
-        dht: {
-            title: 'Dados de Temperatura e Umidade',
-            hAxis: { title: 'Time' },
-            vAxis: { title: 'Values' },
-        },
-        pluviometer: {
-            title: 'Dados de Pluviometria',
-            hAxis: { title: 'Time' },
-            vAxis: { title: 'Rainfall (mm)' },
-        },
-        anemometer: {
-            title: 'Dados de Velocidade do Vento',
-            hAxis: { title: 'Time' },
-            vAxis: { title: 'Wind Speed (m/s)' },
-        },
-        bmp: {
-            title: 'Dados de Pressão',
-            hAxis: { title: 'Time' },
-            vAxis: { title: 'Pressure (hPa)' },
+    const calculateForecast = (dhtData) => {
+        if (dhtData.length > 0) {
+            const lastEntry = dhtData[dhtData.length - 1];
+            setForecast({
+                temperature: lastEntry.temperature + Math.random() * 2 - 1,
+                humidity: lastEntry.humidity + Math.random() * 2 - 1
+            });
         }
+    };
+
+    const formatDataForChart = (data, labels) => {
+        const chartData = [labels];
+        data.forEach(entry => {
+            const row = [new Date(entry.timestamp), ...labels.slice(1).map(label => entry[label.toLowerCase()])];
+            chartData.push(row);
+        });
+        return chartData;
     };
 
     return (
@@ -166,21 +123,6 @@ function Home() {
                             ))}
                         </select>
                     </div>
-                    <div style={{ marginBottom: '15px' }}>
-                        <label style={{ marginRight: '10px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}>
-                            Tipo de Sensor:
-                        </label>
-                        <select 
-                            value={sensorType} 
-                            onChange={e => setSensorType(e.target.value)} 
-                            style={{ padding: '5px', fontSize: '16px', fontFamily: 'Arial, sans-serif' }}
-                        >
-                            <option value="dht">DHT11</option>
-                            <option value="pluviometer">Pluviômetro</option>
-                            <option value="anemometer">Anemômetro</option>
-                            <option value="bmp">BMP280</option>
-                        </select>
-                    </div>
                     <button 
                         onClick={handleFetchData} 
                         style={{ padding: '10px 20px', fontSize: '16px', fontFamily: 'Arial, sans-serif', cursor: 'pointer' }}
@@ -188,16 +130,53 @@ function Home() {
                         Buscar Dados
                     </button>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
                     <Chart
                         width={'400px'}
                         height={'300px'}
                         chartType="LineChart"
-                        data={chartData}
-                        options={chartOptionsMap[sensorType]}
+                        data={formatDataForChart(dhtData, ['Time', 'Temperature', 'Humidity'])}
+                        options={{
+                            title: 'Dados de Temperatura e Umidade',
+                            hAxis: { title: 'Time' },
+                            vAxis: { title: 'Values' },
+                        }}
+                    />
+                    <Chart
+                        width={'400px'}
+                        height={'300px'}
+                        chartType="LineChart"
+                        data={formatDataForChart(pluviometerData, ['Time', 'Rainfall'])}
+                        options={{
+                            title: 'Dados de Pluviometria',
+                            hAxis: { title: 'Time' },
+                            vAxis: { title: 'Rainfall (mm)' },
+                        }}
+                    />
+                    <Chart
+                        width={'400px'}
+                        height={'300px'}
+                        chartType="LineChart"
+                        data={formatDataForChart(anemometerData, ['Time', 'WindSpeed'])}
+                        options={{
+                            title: 'Dados de Velocidade do Vento',
+                            hAxis: { title: 'Time' },
+                            vAxis: { title: 'Wind Speed (m/s)' },
+                        }}
+                    />
+                    <Chart
+                        width={'400px'}
+                        height={'300px'}
+                        chartType="LineChart"
+                        data={formatDataForChart(bmpData, ['Time', 'Pressure'])}
+                        options={{
+                            title: 'Dados de Pressão',
+                            hAxis: { title: 'Time' },
+                            vAxis: { title: 'Pressure (hPa)' },
+                        }}
                     />
                 </div>
-                {forecast && sensorType === "dht" && (
+                {forecast && (
                     <div style={{ marginTop: '20px', textAlign: 'center' }}>
                         <h3>Previsão do Tempo</h3>
                         <p>Temperatura: {forecast.temperature.toFixed(2)}°C</p>
