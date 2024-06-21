@@ -23,10 +23,14 @@ function Home() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Fetch the list of stations
         const fetchStations = async () => {
             try {
-                const response = await axios.get(`/stations`);
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${info.token}`
+                    }
+                };
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/stations`, config);
                 setStations(response.data);
             } catch (error) {
                 console.error("Error fetching stations: ", error);
@@ -35,17 +39,22 @@ function Home() {
         };
 
         fetchStations();
-    }, []);
+    }, [info.token]);
 
     const fetchData = async () => {
         setLoading(true);
         setError(null);
         try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${info.token}`
+                }
+            };
             const responses = await Promise.all([
-                axios.get("/dhtGet", { params: { startDate, endDate, station } }),
-                axios.get("/pluviometerGet", { params: { startDate, endDate, station } }),
-                axios.get("/anemometerGet", { params: { startDate, endDate, station } }),
-                axios.get("/bmpGet", { params: { startDate, endDate, station } })
+                axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, { params: { startDate, endDate, station }, ...config }),
+                axios.get(`${process.env.REACT_APP_API_URL}/pluviometerGet`, { params: { startDate, endDate, station }, ...config }),
+                axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params: { startDate, endDate, station }, ...config }),
+                axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params: { startDate, endDate, station }, ...config })
             ]);
 
             setDhtData(responses[0].data);
