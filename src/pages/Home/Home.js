@@ -60,24 +60,24 @@ function Home() {
         }
     };
 
-    // const calculateForecast = (dhtData) => {
-    //     if (dhtData.length > 0) {
-    //         const lastEntry = dhtData[dhtData.length - 1];
-    //         setForecast({
-    //             temperature: lastEntry.temperature + Math.random() * 2 - 1,
-    //             humidity: lastEntry.humidity + Math.random() * 2 - 1
-    //         });
-    //     }
-    // };
+    const calculateForecast = (dhtData) => {
+        if (dhtData.length > 0) {
+            const lastEntry = dhtData[dhtData.length - 1];
+            setForecast({
+                temperature: lastEntry.temperature + Math.random() * 2 - 1,
+                humidity: lastEntry.humidity + Math.random() * 2 - 1
+            });
+        }
+    };
 
-    // const formatDataForChart = (data, labels) => {
-    //     const chartData = [labels];
-    //     data.forEach(entry => {
-    //         const row = [new Date(entry.timestamp), ...labels.slice(1).map(label => entry[label.toLowerCase()])];
-    //         chartData.push(row);
-    //     });
-    //     return chartData;
-    // };
+    const formatDataForChart = (data, labels) => {
+        const chartData = [labels];
+        data.forEach(entry => {
+            const row = [new Date(entry.timestamp), ...labels.slice(1).map(label => entry[label.toLowerCase()])];
+            chartData.push(row);
+        });
+        return chartData;
+    };
 
     return (
         <HistoricScreen>
