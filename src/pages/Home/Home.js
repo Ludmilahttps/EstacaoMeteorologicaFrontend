@@ -22,20 +22,20 @@ function Home() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        // Fetch the list of stations
-        const fetchStations = async () => {
-            try {
-                const response = await axios.get(`/stations`);
-                setStations(response.data);
-            } catch (error) {
-                console.error("Error fetching stations: ", error);
-                setError("Error fetching stations");
-            }
-        };
+    // useEffect(() => {
+    //     // Fetch the list of stations
+    //     const fetchStations = async () => {
+    //         try {
+    //             const response = await axios.get(`/stations`);
+    //             setStations(response.data);
+    //         } catch (error) {
+    //             console.error("Error fetching stations: ", error);
+    //             setError("Error fetching stations");
+    //         }
+    //     };
 
-        fetchStations();
-    }, []);
+    //     fetchStations();
+    // }, []);
 
     const fetchData = async () => {
         setLoading(true);
