@@ -127,8 +127,8 @@ function Home() {
                         >
                             <option value="">Selecione uma Estação</option>
                             {stations.map((station) => (
-                                <option key={station.id} value={station.id}>
-                                    {station.name}
+                                <option key={station.idstation} value={station.idstation}>
+                                    {station.location}
                                 </option>
                             ))}
                         </Select>
