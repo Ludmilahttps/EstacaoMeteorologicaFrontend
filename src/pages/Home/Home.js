@@ -32,6 +32,7 @@ function Home() {
                 };
                 const response = await axios.get(`${process.env.REACT_APP_API_URL}/stations`, config);
                 setStations(response.data);
+                response.json({data: response.data} );
             } catch (error) {
                 console.error("Error fetching stations: ", error);
                 setError("Error fetching stations");
