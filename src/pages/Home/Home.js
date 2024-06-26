@@ -7,6 +7,7 @@ import { Chart } from "react-google-charts";
 import axios from "axios";
 import styled from 'styled-components';
 
+
 function Home() {
     const { info } = useContext(UserContext);
     const [startDate, setStartDate] = useState("");
@@ -29,9 +30,7 @@ function Home() {
                         Authorization: `Bearer ${info.token}`
                     }
                 };
-                console.log('Fetching stations with config:', config);
                 const response = await axios.get(`${process.env.REACT_APP_API_URL}/stations`, config);
-                console.log('Stations response:', response.data);
                 setStations(response.data);
             } catch (error) {
                 console.error("Error fetching stations: ", error);
