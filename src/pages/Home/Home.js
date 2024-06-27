@@ -55,9 +55,9 @@ function Home() {
             const formattedEndDate = format(parseISO(endDate), 'yyyy/MM/dd');
 
             const params = {
-                formattedStartDate,
-                formattedEndDate,
-                station
+                startDate: formattedStartDate,
+                endDate: formattedEndDate,
+                idStation: station
             };
 
             setSentParams(params);
