@@ -55,9 +55,9 @@ function Home() {
             const formattedEndDate = format(parseISO(endDate), 'yyyy/MM/dd');
 
             const params = {
-                startdate: formattedStartDate,
-                enddate: formattedEndDate,
-                idstation : station
+                startDate: formattedStartDate,
+                endDate: formattedEndDate,
+                idStation: station
             };
 
             setSentParams(params);
@@ -160,95 +160,67 @@ function Home() {
                     <div>
                         <h3>Parâmetros Enviados:</h3>
                         <pre>{JSON.stringify(sentParams, null, 2)}</pre>
+                        <pre>{JSON.stringify(setDhtData, null, 2)}</pre>
+                        
                     </div>
                 )}
                 {!loading && !error && (
                     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
                         {dhtData.length > 0 && (
-                            <div>
-                                <h3>Dados de Temperatura e Umidade</h3>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Data/Hora</th>
-                                            <th>Temperatura (°C)</th>
-                                            <th>Umidade (%)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {dhtData.map((entry, index) => (
-                                            <tr key={index}>
-                                                <td>{new Date(entry.timestamp).toLocaleString()}</td>
-                                                <td>{entry.temperature}</td>
-                                                <td>{entry.humidity}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                            <Chart
+                                width={'400px'}
+                                height={'300px'}
+                                chartType="LineChart"
+                                data={formatDataForChart(dhtData, ['Time', 'Temperature', 'Humidity'])}
+                                options={{
+                                    title: 'Dados de Temperatura e Umidade',
+                                    hAxis: { title: 'Time' },
+                                    vAxis: { title: 'Values' },
+                                    colors: ['#F49A23', '#0B928C']
+                                }}
+                            />
                         )}
                         {pluviometerData.length > 0 && (
-                            <div>
-                                <h3>Dados de Pluviometria</h3>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Data/Hora</th>
-                                            <th>Pluviometria (mm)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {pluviometerData.map((entry, index) => (
-                                            <tr key={index}>
-                                                <td>{new Date(entry.timestamp).toLocaleString()}</td>
-                                                <td>{entry.rainfall}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                            <Chart
+                                width={'400px'}
+                                height={'300px'}
+                                chartType="LineChart"
+                                data={formatDataForChart(pluviometerData, ['Time', 'Rainfall'])}
+                                options={{
+                                    title: 'Dados de Pluviometria',
+                                    hAxis: { title: 'Time' },
+                                    vAxis: { title: 'Rainfall (mm)' },
+                                    colors: ['#0B928C']
+                                }}
+                            />
                         )}
                         {anemometerData.length > 0 && (
-                            <div>
-                                <h3>Dados de Velocidade do Vento</h3>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Data/Hora</th>
-                                            <th>Velocidade do Vento (m/s)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {anemometerData.map((entry, index) => (
-                                            <tr key={index}>
-                                                <td>{new Date(entry.timestamp).toLocaleString()}</td>
-                                                <td>{entry.windspeed}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                            <Chart
+                                width={'400px'}
+                                height={'300px'}
+                                chartType="LineChart"
+                                data={formatDataForChart(anemometerData, ['Time', 'WindSpeed'])}
+                                options={{
+                                    title: 'Dados de Velocidade do Vento',
+                                    hAxis: { title: 'Time' },
+                                    vAxis: { title: 'Wind Speed (m/s)' },
+                                    colors: ['#193946']
+                                }}
+                            />
                         )}
                         {bmpData.length > 0 && (
-                            <div>
-                                <h3>Dados de Pressão</h3>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Data/Hora</th>
-                                            <th>Pressão (hPa)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {bmpData.map((entry, index) => (
-                                            <tr key={index}>
-                                                <td>{new Date(entry.timestamp).toLocaleString()}</td>
-                                                <td>{entry.pressure}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                            <Chart
+                                width={'400px'}
+                                height={'300px'}
+                                chartType="LineChart"
+                                data={formatDataForChart(bmpData, ['Time', 'Pressure'])}
+                                options={{
+                                    title: 'Dados de Pressão',
+                                    hAxis: { title: 'Time' },
+                                    vAxis: { title: 'Pressure (hPa)' },
+                                    colors: ['#F49A23']
+                                }}
+                            />
                         )}
                     </div>
                 )}
