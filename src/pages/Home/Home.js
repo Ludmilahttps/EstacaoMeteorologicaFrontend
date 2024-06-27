@@ -64,24 +64,28 @@ function Home() {
 
             console.log("Fetching data with params:", params);
 
-            const responses = await Promise.all([
-                axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, { params, ...config }),
-                axios.get(`${process.env.REACT_APP_API_URL}/pluviometerGet`, { params, ...config }),
-                axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params, ...config }),
-                axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params, ...config })
-            ]);
+            // const responses = await Promise.all([
+            //     axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, { params, ...config }),
+            //     axios.get(`${process.env.REACT_APP_API_URL}/pluviometerGet`, { params, ...config }),
+            //     axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params, ...config }),
+            //     axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params, ...config })
+            // ]);
+            const dhtresponse = await axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, { params, config });
+            const pluviometerresponse = await axios.get(`${process.env.REACT_APP_API_URL}/pluviometerGet`, { params, config });
+            const anemometerresponse = await axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params, config });
+            const bmpresponse = await axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params, config });
 
-            console.log('DHT Data:', responses[0].data);
-            console.log('Pluviometer Data:', responses[1].data);
-            console.log('Anemometer Data:', responses[2].data);
-            console.log('BMP Data:', responses[3].data);
+            // console.log('DHT Data:', responses[0].data);
+            // console.log('Pluviometer Data:', responses[1].data);
+            // console.log('Anemometer Data:', responses[2].data);
+            // console.log('BMP Data:', responses[3].data);
 
-            setDhtData(responses[0].data);
-            setPluviometerData(responses[1].data);
-            setAnemometerData(responses[2].data);
-            setBmpData(responses[3].data);
+            setDhtData(dhtresponse.data);
+            setPluviometerData(pluviometerresponse.data);
+            setAnemometerData(anemometerresponse.data);
+            setBmpData(bmpresponse.data);
 
-            calculateForecast(responses[0].data);
+            calculateForecast(dhtresponse.data);
         } catch (error) {
             console.error("Error fetching data:", error.response || error.message || error);
             setError("Error fetching data: " + (error.response?.data?.message || error.message));
@@ -163,32 +167,6 @@ function Home() {
    
                     </div>
                 )}
-                {/* aa */}
-                {dhtData.length && (
-                    <div>
-                        <h3>Dados de Temperatura e Umidade (DHT):</h3>
-                        <pre>{JSON.stringify(dhtData, null, 2)}</pre>
-                    </div>
-                )}
-                {pluviometerData.length && (
-                    <div>
-                        <h3>Dados de Pluviometria:</h3>
-                        <pre>{JSON.stringify(pluviometerData, null, 2)}</pre>
-                    </div>
-                )}
-                {anemometerData.length && (
-                    <div>
-                        <h3>Dados de Velocidade do Vento (Anemômetro):</h3>
-                        <pre>{JSON.stringify(anemometerData, null, 2)}</pre>
-                    </div>
-                )}
-                {bmpData.length && (
-                    <div>
-                        <h3>Dados de Pressão (BMP):</h3>
-                        <pre>{JSON.stringify(bmpData, null, 2)}</pre>
-                    </div>
-                )}
-                {/* aa */}
                 {!loading && !error && (
                     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
                         {dhtData.length > 0 && (
