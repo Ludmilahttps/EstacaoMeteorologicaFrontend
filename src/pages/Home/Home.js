@@ -232,4 +232,9 @@ function Home() {
                     </div>
                 )}
             </Feed>
-           
+            <Footer />
+        </HistoricScreen>
+    );
+}
+
+export default Home;
