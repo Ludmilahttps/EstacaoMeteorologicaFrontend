@@ -21,6 +21,7 @@ function Home() {
     const [forecast, setForecast] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [sentParams, setSentParams] = useState(null);
 
     useEffect(() => {
         const fetchStations = async () => {
@@ -54,15 +55,19 @@ function Home() {
             const formattedStartDate = format(parseISO(startDate), 'yyyy-MM-dd');
             const formattedEndDate = format(parseISO(endDate), 'yyyy-MM-dd');
 
-            console.log("Fetching data with params:", {
+            const params = {
                 startDate: formattedStartDate,
                 endDate: formattedEndDate,
                 station,
                 stations
-            });
+            };
+
+            setSentParams(params);
+
+            console.log("Fetching data with params:", params);
 
             const responses = await Promise.all([
-                axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, { params: {formattedStartDate, formattedEndDate, stations }, ...config }),
+                axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, stations }, ...config }),
                 axios.get(`${process.env.REACT_APP_API_URL}/pluviometerGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, station }, ...config }),
                 axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, station }, ...config }),
                 axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, station }, ...config })
@@ -81,7 +86,7 @@ function Home() {
             calculateForecast(responses[0].data);
         } catch (error) {
             console.error("Error fetching data:", error.response || error.message || error);
-            setError("Error fetching data: Fetching data ->" + (startDate) + (endDate) + (station) +(stations) );
+            setError("Error fetching data: " + (error.response?.data?.message || error.message));
         } finally {
             setLoading(false);
         }
@@ -153,6 +158,12 @@ function Home() {
                 </ControlPanel>
                 {loading && <p>Carregando...</p>}
                 {error && <p style={{ color: 'red' }}>{error}</p>}
+                {sentParams && (
+                    <div>
+                        <h3>Parâmetros Enviados:</h3>
+                        <pre>{JSON.stringify(sentParams, null, 2)}</pre>
+                    </div>
+                )}
                 {!loading && !error && (
                     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
                         {dhtData.length > 0 && (
@@ -221,9 +232,4 @@ function Home() {
                     </div>
                 )}
             </Feed>
-            <Footer />
-        </HistoricScreen>
-    );
-}
-
-export default Home;
+           
