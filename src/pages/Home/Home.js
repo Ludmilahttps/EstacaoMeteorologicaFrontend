@@ -66,7 +66,7 @@ function Home() {
             //     axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params, ...config }),
             //     axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params, ...config })
             // ]);
-            const dhtresponse = await axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, { params, config });
+            const dhtresponse = await axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, params  );
             const pluviometerresponse = await axios.get(`${process.env.REACT_APP_API_URL}/pluviometerGet`, { params, config });
             const anemometerresponse = await axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params, config });
             const bmpresponse = await axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params, config });
