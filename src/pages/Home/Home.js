@@ -62,7 +62,7 @@ function Home() {
             });
 
             const responses = await Promise.all([
-                axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, stations }, ...config }),
+                axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, { params: {formattedStartDate, formattedEndDate, stations }, ...config }),
                 axios.get(`${process.env.REACT_APP_API_URL}/pluviometerGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, station }, ...config }),
                 axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, station }, ...config }),
                 axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, station }, ...config })
@@ -81,7 +81,7 @@ function Home() {
             calculateForecast(responses[0].data);
         } catch (error) {
             console.error("Error fetching data:", error.response || error.message || error);
-            setError("Error fetching data: " + (error.response?.data?.message || error.message));
+            setError("Error fetching data: Fetching data ->" + (startDate || endDate || station || stations)  );
         } finally {
             setLoading(false);
         }
