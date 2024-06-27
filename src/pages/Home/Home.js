@@ -81,7 +81,7 @@ function Home() {
             calculateForecast(responses[0].data);
         } catch (error) {
             console.error("Error fetching data:", error.response || error.message || error);
-            setError("Error fetching data: Fetching data ->" + (startDate && endDate && station && stations)  );
+            setError("Error fetching data: Fetching data ->" + (startDate) + (endDate) + (station) +(stations) );
         } finally {
             setLoading(false);
         }
