@@ -160,7 +160,7 @@ function Home() {
                     <div>
                         <h3>Parâmetros Enviados:</h3>
                         <pre>{JSON.stringify(sentParams, null, 2)}</pre>
-                        <pre>{JSON.stringify(setDhtData, null, 2)}</pre>
+                        <pre>{JSON.stringify(dhtData, null, 2)}</pre>
                         
                     </div>
                 )}
