@@ -5,7 +5,6 @@ import Footer from "../../components/Footer";
 import { UserContext } from "../../UserContext.js";
 import { Chart } from "react-google-charts";
 import axios from "axios";
-import styled from 'styled-components';
 import { format, parseISO } from 'date-fns';
 
 function Home() {
@@ -56,9 +55,9 @@ function Home() {
             const formattedEndDate = format(parseISO(endDate), 'yyyy/MM/dd');
 
             const params = {
-                formattedStartDate,
-                formattedEndDate,
-                station
+                startdate: formattedStartDate,
+                enddate: formattedEndDate,
+                idstation : station
             };
 
             setSentParams(params);
