@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { HistoricScreen, Feed, Balance, ControlPanel, ControlItem, Label, Input, Select, Button } from './style';
+import { HistoricScreen, Feed, ControlPanel, ControlItem, Label, Input, Select, Button } from './style';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { UserContext } from "../../UserContext.js";
 import { Chart } from "react-google-charts";
 import axios from "axios";
 import styled from 'styled-components';
-
+import { format, parseISO } from 'date-fns';
 
 function Home() {
     const { info } = useContext(UserContext);
@@ -50,12 +50,28 @@ function Home() {
                     Authorization: `Bearer ${info.token}`
                 }
             };
+
+            const formattedStartDate = format(parseISO(startDate), 'yyyy-MM-dd');
+            const formattedEndDate = format(parseISO(endDate), 'yyyy-MM-dd');
+
+            console.log("Fetching data with params:", {
+                startDate: formattedStartDate,
+                endDate: formattedEndDate,
+                station,
+                stations
+            });
+
             const responses = await Promise.all([
-                axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, { params: { startDate, endDate, station }, ...config }),
-                axios.get(`${process.env.REACT_APP_API_URL}/pluviometerGet`, { params: { startDate, endDate, station }, ...config }),
-                axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params: { startDate, endDate, station }, ...config }),
-                axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params: { startDate, endDate, station }, ...config })
+                axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, stations }, ...config }),
+                axios.get(`${process.env.REACT_APP_API_URL}/pluviometerGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, station }, ...config }),
+                axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, station }, ...config }),
+                axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, station }, ...config })
             ]);
+
+            console.log('DHT Data:', responses[0].data);
+            console.log('Pluviometer Data:', responses[1].data);
+            console.log('Anemometer Data:', responses[2].data);
+            console.log('BMP Data:', responses[3].data);
 
             setDhtData(responses[0].data);
             setPluviometerData(responses[1].data);
@@ -64,8 +80,8 @@ function Home() {
 
             calculateForecast(responses[0].data);
         } catch (error) {
-            console.error("Error fetching data: ", error);
-            setError("Error fetching data");
+            console.error("Error fetching data:", error.response || error.message || error);
+            setError("Error fetching data: " + (error.response?.data?.message || error.message));
         } finally {
             setLoading(false);
         }
