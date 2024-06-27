@@ -164,25 +164,25 @@ function Home() {
                     </div>
                 )}
                 {/* aa */}
-                {dhtData.length > 0 && (
+                {dhtData.length && (
                     <div>
                         <h3>Dados de Temperatura e Umidade (DHT):</h3>
                         <pre>{JSON.stringify(dhtData, null, 2)}</pre>
                     </div>
                 )}
-                {pluviometerData.length > 0 && (
+                {pluviometerData.length && (
                     <div>
                         <h3>Dados de Pluviometria:</h3>
                         <pre>{JSON.stringify(pluviometerData, null, 2)}</pre>
                     </div>
                 )}
-                {anemometerData.length > 0 && (
+                {anemometerData.length && (
                     <div>
                         <h3>Dados de Velocidade do Vento (Anemômetro):</h3>
                         <pre>{JSON.stringify(anemometerData, null, 2)}</pre>
                     </div>
                 )}
-                {bmpData.length > 0 && (
+                {bmpData.length && (
                     <div>
                         <h3>Dados de Pressão (BMP):</h3>
                         <pre>{JSON.stringify(bmpData, null, 2)}</pre>
