@@ -75,14 +75,13 @@ function Home() {
             console.log('Pluviometer Data:', pluviometerresponse.data);
             console.log('Anemometer Data:', anemometerresponse.data);
             console.log('BMP Data:', bmpresponse.data);
-            
+
 
             setDhtData(dhtresponse.data);
             setPluviometerData(pluviometerresponse.data);
             setAnemometerData(anemometerresponse.data);
             setBmpData(bmpresponse.data);
 
-            calculateForecast(dhtresponse.data);
         } catch (error) {
             console.error("Error fetching data:", error.response || error.message || error);
             setError("Error fetching data: " + (error.response?.data?.message || error.message));
