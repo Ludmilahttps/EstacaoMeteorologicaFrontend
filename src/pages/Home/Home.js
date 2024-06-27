@@ -58,8 +58,7 @@ function Home() {
             const params = {
                 startDate: formattedStartDate,
                 endDate: formattedEndDate,
-                station,
-                stations
+                station
             };
 
             setSentParams(params);
@@ -67,7 +66,7 @@ function Home() {
             console.log("Fetching data with params:", params);
 
             const responses = await Promise.all([
-                axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, stations }, ...config }),
+                axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, station }, ...config }),
                 axios.get(`${process.env.REACT_APP_API_URL}/pluviometerGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, station }, ...config }),
                 axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, station }, ...config }),
                 axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params: { startDate: formattedStartDate, endDate: formattedEndDate, station }, ...config })
