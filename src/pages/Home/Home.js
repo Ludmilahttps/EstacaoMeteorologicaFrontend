@@ -76,7 +76,7 @@ function Home() {
             console.log('Anemometer Data:', responses[2].data);
             console.log('BMP Data:', responses[3].data);
 
-            setDhtData(responses.data);
+            setDhtData(responses[0].data);
             setPluviometerData(responses[1].data);
             setAnemometerData(responses[2].data);
             setBmpData(responses[3].data);
@@ -160,10 +160,35 @@ function Home() {
                     <div>
                         <h3>Parâmetros Enviados:</h3>
                         <pre>{JSON.stringify(sentParams, null, 2)}</pre>
-                        <pre>{JSON.stringify(dhtData, null, 2)}</pre>
-                        
+   
                     </div>
                 )}
+                {/* aa */}
+                {dhtData.length > 0 && (
+                    <div>
+                        <h3>Dados de Temperatura e Umidade (DHT):</h3>
+                        <pre>{JSON.stringify(dhtData, null, 2)}</pre>
+                    </div>
+                )}
+                {pluviometerData.length > 0 && (
+                    <div>
+                        <h3>Dados de Pluviometria:</h3>
+                        <pre>{JSON.stringify(pluviometerData, null, 2)}</pre>
+                    </div>
+                )}
+                {anemometerData.length > 0 && (
+                    <div>
+                        <h3>Dados de Velocidade do Vento (Anemômetro):</h3>
+                        <pre>{JSON.stringify(anemometerData, null, 2)}</pre>
+                    </div>
+                )}
+                {bmpData.length > 0 && (
+                    <div>
+                        <h3>Dados de Pressão (BMP):</h3>
+                        <pre>{JSON.stringify(bmpData, null, 2)}</pre>
+                    </div>
+                )}
+                {/* aa */}
                 {!loading && !error && (
                     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
                         {dhtData.length > 0 && (
