@@ -76,7 +76,7 @@ function Home() {
             console.log('Anemometer Data:', responses[2].data);
             console.log('BMP Data:', responses[3].data);
 
-            setDhtData(responses[0].data);
+            setDhtData(responses.data);
             setPluviometerData(responses[1].data);
             setAnemometerData(responses[2].data);
             setBmpData(responses[3].data);
