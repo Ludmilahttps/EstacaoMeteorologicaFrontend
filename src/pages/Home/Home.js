@@ -52,8 +52,8 @@ function Home() {
                 }
             };
 
-            const formattedStartDate = format(parseISO(startDate), 'yyyy-MM-dd');
-            const formattedEndDate = format(parseISO(endDate), 'yyyy-MM-dd');
+            const formattedStartDate = format(parseISO(startDate), 'yyyy/MM/dd');
+            const formattedEndDate = format(parseISO(endDate), 'yyyy/MM/dd');
 
             const params = {
                 formattedStartDate,
