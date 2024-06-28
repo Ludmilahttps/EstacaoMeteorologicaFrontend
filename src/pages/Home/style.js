@@ -22,6 +22,13 @@ export const HistoricScreen = styled.div
         margin-top: 17px;
         margin-bottom: 17px;
     }
+    > p {
+        font-family: 'Lexend Deca';
+        font-size: 23px;
+        color: #193946;
+        margin-top: 17px;
+        margin-bottom: 17px;
+    }
 `
 export const Feed= styled.div
 `
@@ -31,6 +38,13 @@ export const Feed= styled.div
     align-items: center;
     justify-context: center;
     flex-direction: column;
+    > p{
+        font-family: 'Lexend Deca';
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 20px;
+        color: #000000;
+    }
 `
 
 // export const Chart= styled.div
