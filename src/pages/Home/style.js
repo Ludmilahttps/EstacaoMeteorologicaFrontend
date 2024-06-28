@@ -35,6 +35,7 @@ export const Feed= styled.div
     width: 100%;
     height: 100%;
     display: flex;
+    overflow-y: auto;
     align-items: center;
     justify-context: center;
     flex-direction: column;
