@@ -167,13 +167,6 @@ function Home() {
                 </ControlPanel>
                 {loading && <p>Carregando...</p>}
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                {sentParams && (
-                    <div>
-                        <h3>Parâmetros Enviados:</h3>
-                        <pre>{JSON.stringify(sentParams, null, 2)}</pre>
-   
-                    </div>
-                )}
                 {!loading && !error && (
                     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
                         {dhtData.length > 0 && (
