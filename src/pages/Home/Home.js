@@ -18,7 +18,6 @@ function Home() {
     const [pluviometerData, setPluviometerData] = useState([]);
     const [anemometerData, setAnemometerData] = useState([]);
     const [bmpData, setBmpData] = useState([]);
-    const [forecast, setForecast] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -72,7 +71,6 @@ function Home() {
             setAnemometerData(responses[2].data);
             setBmpData(responses[3].data);
 
-            calculateForecast(responses[0].data);
         } catch (error) {
             console.error("Error fetching data:", error.response || error.message || error);
             setError("Error fetching data: " + (error.response?.data?.message || error.message));
@@ -89,15 +87,6 @@ function Home() {
         }
     };
 
-    const calculateForecast = (dhtData) => {
-        if (dhtData.length > 0) {
-            const lastEntry = dhtData[dhtData.length - 1];
-            setForecast({
-                temperature: lastEntry.temperature + Math.random() * 2 - 1,
-                humidity: lastEntry.humidity + Math.random() * 2 - 1
-            });
-        }
-    };
 
     const formatDataForChart = (data, labels) => {
         return {
