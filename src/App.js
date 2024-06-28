@@ -8,12 +8,13 @@ import SignIn from "./pages/SignIn/SignIn"
 import SignUp from "./pages/SignUp/SignUp"
 import Home from "./pages/Home/Home"
 import NewDataDHT from "./pages/NewDataDHT/NewDataDHT"
-import NewOrder from "./pages/NewOrder/NewOrder"
-import NewCake from "./pages/NewCake/NewCake"
+import NewPluviometer from "./pages/NewPuviometer/newPluviometer"
+import NewAnemometer from "./pages/NewAnemometer/NewAnemometer"
 import UpdateEmail from "./pages/email/UpdateEmail"
-import DeleteOrder from "./pages/OrderDelete/DeleteOrder"
+import NewBmp from "./pages/NewBmp/newDataBmp"
 
 function App() {
+
 
   const [info, setInfo] = useState({})
   const [historic, setHistoric] = useState([])
@@ -27,10 +28,10 @@ function App() {
           <Route path="/cadastro" element={< SignUp />} />
           <Route path="/home" element={<  Home />} />
           <Route path="/novo-dado-dht" element={< NewDataDHT />} />
-          <Route path="/novo-pedido" element={< NewOrder />} />
-          <Route path="/novo-bolo" element={< NewCake />} />
+          <Route path="/novo-dado-pluviometro" element={< NewPluviometer />} />
+          <Route path="/novo-dado-anemometro" element={< NewAnemometer />} />
           <Route path="/atualizar-email" element={< UpdateEmail />} />
-          <Route path="/deletar-pedido" element={< DeleteOrder />} />
+          <Route path="/nono-dado-bmp" element={< NewBmp />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

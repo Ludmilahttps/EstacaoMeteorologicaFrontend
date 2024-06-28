@@ -17,13 +17,12 @@ export default function NewOrder() {
     const post = {
       idStation: idStation.trim(),
       rainfall: rainfall.trim(),
-      employeeid: info.id
     };
 
     console.log(post);
     try {
-      const newOrder = await axios.post(`${process.env.REACT_APP_API_URL}/orders`, post);
-      console.log(newOrder.data);
+      const newPluviometer = await axios.post(`${process.env.REACT_APP_API_URL}/pluviometer`, post);
+      console.log(newPluviometer.data);
       goTo('/home');
       alert("Pedido registrado com sucesso");
     } catch (error) {

@@ -7,9 +7,9 @@ import { UserContext } from "../../UserContext.js";
 export default function NewOrder() {
   const goTo = useNavigate();
   const [idStation, setIdStation] = useState("");
-  const [pressure, setPressure] = useState("");
-  const [temperature, setTemperature] = useState("");
-  const [altitude, setAltitude] = useState("");
+  const [windSpeed, setWindSpeed] = useState("");
+  const [windDirection, setWindDirection] = useState("");
+  const [windAngle, setWindAngle] = useState("");
 
   const { info } = useContext(UserContext);
 
@@ -18,16 +18,15 @@ export default function NewOrder() {
 
     const post = {
       idStation: idStation.trim(),
-      pressure: pressure.trim(),
-      temperature: temperature.trim(),
-      altitude: altitude.trim(),
-      employeeid: info.id
+      windSpeed: windSpeed.trim(),
+      windDirection: windDirection.trim(),
+      windAngle: windAngle.trim(),
     };
 
     console.log(post);
     try {
-      const newOrder = await axios.post(`${process.env.REACT_APP_API_URL}/orders`, post);
-      console.log(newOrder.data);
+      const newAnemometer = await axios.post(`${process.env.REACT_APP_API_URL}/anemometer `, post);
+      console.log(newAnemometer.data);
       goTo('/home');
       alert("Pedido registrado com sucesso");
     } catch (error) {
@@ -37,7 +36,7 @@ export default function NewOrder() {
 
   return (
     <Container>
-      <h1>Inserir Dados BMP</h1>
+      <h1>Inserir Dados Anemometro</h1>
       <form onSubmit={sendOrder}>
         <input
           type="text"
@@ -48,24 +47,24 @@ export default function NewOrder() {
         />
         <input
           type="text"
-          name="pressure"
-          placeholder="Pressão"
-          value={pressure}
-          onChange={(e) => setPressure(e.target.value)}
+          name="windSpeed"
+          placeholder="Velocidade do Vento"
+          value={windSpeed}
+          onChange={(e) => setWindSpeed(e.target.value)}
         />
         <input
           type="text"
-          name="temperature"
-          placeholder="Temperatura"
-          value={temperature}
-          onChange={(e) => setTemperature(e.target.value)}
+          name="windDirection"
+          placeholder="Direção do Vento"
+          value={windDirection}
+          onChange={(e) => setWindDirection(e.target.value)}
         />
         <input
           type="text"
-          name="altitude"
-          placeholder="Altitude"
-          value={altitude}
-          onChange={(e) => setAltitude(e.target.value)}
+          name="windAngle"
+          placeholder="Ângulo do Vento"
+          value={windAngle}
+          onChange={(e) => setWindAngle(e.target.value)}
         />
         <button type="submit">Registrar</button>
       </form>
