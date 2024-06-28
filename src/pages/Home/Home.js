@@ -66,21 +66,21 @@ function Home() {
             //     axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params, ...config }),
             //     axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params, ...config })
             // ]);
-            const dhtresponse = await axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`,{params} );
-            const pluviometerresponse = await axios.get(`${process.env.REACT_APP_API_URL}/pluviometerGet`, { params, config });
-            const anemometerresponse = await axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params, config });
-            const bmpresponse = await axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params, config });
+            const dhtresponse = await axios.get(`${process.env.REACT_APP_API_URL}/dhtGet`,{ params, config } );
+            // const pluviometerresponse = await axios.get(`${process.env.REACT_APP_API_URL}/pluviometerGet`, { params, config });
+            // const anemometerresponse = await axios.get(`${process.env.REACT_APP_API_URL}/anemometerGet`, { params, config });
+            // const bmpresponse = await axios.get(`${process.env.REACT_APP_API_URL}/bmpGet`, { params, config });
 
             console.log('DHT Data:', dhtresponse.data);
-            console.log('Pluviometer Data:', pluviometerresponse.data);
-            console.log('Anemometer Data:', anemometerresponse.data);
-            console.log('BMP Data:', bmpresponse.data);
+            // console.log('Pluviometer Data:', pluviometerresponse.data);
+            // console.log('Anemometer Data:', anemometerresponse.data);
+            // console.log('BMP Data:', bmpresponse.data);
 
 
             setDhtData(dhtresponse.data);
-            setPluviometerData(pluviometerresponse.data);
-            setAnemometerData(anemometerresponse.data);
-            setBmpData(bmpresponse.data);
+            // setPluviometerData(pluviometerresponse.data);
+            // setAnemometerData(anemometerresponse.data);
+            // setBmpData(bmpresponse.data);
 
         } catch (error) {
             console.error("Error fetching data:", error.response || error.message || error);
