@@ -31,7 +31,7 @@ function App() {
           <Route path="/novo-dado-pluviometro" element={< NewPluviometer />} />
           <Route path="/novo-dado-anemometro" element={< NewAnemometer />} />
           <Route path="/atualizar-email" element={< UpdateEmail />} />
-          <Route path="/nono-dado-bmp" element={< NewBmp />} />
+          <Route path="/novo-dado-bmp" element={< NewBmp />} />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
