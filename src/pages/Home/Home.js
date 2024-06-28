@@ -101,7 +101,7 @@ function Home() {
 
     const formatDataForChart = (data, labels) => {
         return {
-            labels: data.map(entry => new Date(entry.timestamp).toLocaleString()),
+            labels: data.map(entry => new Date(entry.date).toLocaleString()),
             datasets: labels.map((label, index) => ({
                 label,
                 data: data.map(entry => entry[label.toLowerCase()]),
@@ -156,7 +156,7 @@ function Home() {
                         {dhtData.length > 0 && (
                             <div style={{ width: '45%', margin: '20px' }}>
                                 <Line
-                                    data={formatDataForChart(dhtData.date, ['Temperature', 'Humidity'])}
+                                    data={formatDataForChart(dhtData, ['Temperature', 'Humidity'])}
                                     options={{
                                         plugins: {
                                             title: {
@@ -175,7 +175,7 @@ function Home() {
                         {pluviometerData.length > 0 && (
                             <div style={{ width: '45%', margin: '20px' }}>
                                 <Line
-                                    data={formatDataForChart(pluviometerData.date, ['Rainfall'])}
+                                    data={formatDataForChart(pluviometerData, ['Rainfall'])}
                                     options={{
                                         plugins: {
                                             title: {
@@ -194,7 +194,7 @@ function Home() {
                         {anemometerData.length > 0 && (
                             <div style={{ width: '45%', margin: '20px' }}>
                                 <Line
-                                    data={formatDataForChart(anemometerData. , ['WindSpeed'])}
+                                    data={formatDataForChart(anemometerData, ['WindSpeed'])}
                                     options={{
                                         plugins: {
                                             title: {
