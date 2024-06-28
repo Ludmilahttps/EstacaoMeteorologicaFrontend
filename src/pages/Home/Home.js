@@ -101,7 +101,7 @@ function Home() {
 
     const formatDataForChart = (data, labels) => {
         return {
-            labels: data.map(entry => format(parseISO(entry.timestamp), 'dd/MM/yyyy')),
+            labels: data.map(entry => format(parseISO(entry.timestamp), 'dd/MM/yyyy HH:mm:ss')),
             datasets: labels.map((label, index) => ({
                 label,
                 data: data.map(entry => entry[label.toLowerCase()]),
