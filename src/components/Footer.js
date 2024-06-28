@@ -10,11 +10,11 @@ function Footer() {
                 <ion-icon name="sparkles-outline"></ion-icon>
                 <p>Inserir Dados DHT</p>
             </Link>
-            <Link data-test="new-expense" to="/novo-dado-pluviometer">
+            <Link data-test="new-expense" to="/novo-dado-pluviometro">
                 <ion-icon name="receipt-outline"></ion-icon>
                 <p>Inserir Dados Pluviometro</p>
             </Link>
-            <Link data-test="new-expense" to="/novo-dado-anemometer">
+            <Link data-test="new-expense" to="/novo-dado-anemometro">
                 <ion-icon name="sparkles-outline"></ion-icon>
                 <p>Inserir Dados Anemometro</p>
             </Link>     
