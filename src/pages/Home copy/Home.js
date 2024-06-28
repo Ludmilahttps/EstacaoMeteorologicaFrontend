@@ -5,6 +5,8 @@ import Footer from "../../components/Footer";
 import { UserContext } from "../../UserContext.js";
 import axios from "axios";
 import { format, parseISO } from 'date-fns';
+import { Line } from 'react-chartjs-2';
+import * as tf from '@tensorflow/tfjs';
 
 function Home() {
     const { info } = useContext(UserContext);
@@ -57,7 +59,6 @@ function Home() {
                 idStation: station
             };
 
-
             console.log("Fetching data with params:", params);
 
             const responses = await Promise.all([
@@ -77,12 +78,33 @@ function Home() {
             setAnemometerData(responses[2].data);
             setBmpData(responses[3].data);
 
+            // Realize análise e previsão do tempo aqui
+            const weatherForecast = forecastWeather(responses[0].data);
+            console.log('Weather Forecast:', weatherForecast);
+
         } catch (error) {
             console.error("Error fetching data:", error.response || error.message || error);
             setError("Error fetching data: " + (error.response?.data?.message || error.message));
         } finally {
             setLoading(false);
         }
+    };
+
+    const forecastWeather = (dhtData) => {
+        // Exemplo básico de previsão com TensorFlow.js
+        const temperatureData = dhtData.map(d => d.temperature);
+        const model = tf.sequential();
+        model.add(tf.layers.dense({ units: 1, inputShape: [1] }));
+        model.compile({ loss: 'meanSquaredError', optimizer: 'sgd' });
+
+        const xs = tf.tensor1d(temperatureData.slice(0, -1));
+        const ys = tf.tensor1d(temperatureData.slice(1));
+
+        model.fit(xs, ys, { epochs: 10 }).then(() => {
+            const input = tf.tensor1d([temperatureData[temperatureData.length - 1]]);
+            const prediction = model.predict(input).dataSync();
+            console.log("Next temperature prediction: ", prediction[0]);
+        });
     };
 
     const handleFetchData = () => {
@@ -93,6 +115,19 @@ function Home() {
         }
     };
 
+    // Preparando dados para gráficos
+    const prepareChartData = (data, key) => {
+        return {
+            labels: data.map(d => format(parseISO(d.date), 'dd/MM/yyyy')),
+            datasets: [{
+                label: key,
+                data: data.map(d => d[key]),
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: false,
+            }]
+        };
+    };
 
     return (
         <HistoricScreen>
@@ -133,6 +168,26 @@ function Home() {
                 </ControlPanel>
                 {loading && <p>Carregando...</p>}
                 {error && <p style={{ color: 'red' }}>{error}</p>}
+                <div>
+                    <h2>Temperature</h2>
+                    <Line data={prepareChartData(dhtData, 'temperature')} />
+                </div>
+                <div>
+                    <h2>Humidity</h2>
+                    <Line data={prepareChartData(dhtData, 'humidity')} />
+                </div>
+                <div>
+                    <h2>Rainfall</h2>
+                    <Line data={prepareChartData(pluviometerData, 'rainfall')} />
+                </div>
+                <div>
+                    <h2>Wind Speed</h2>
+                    <Line data={prepareChartData(anemometerData, 'windspeed')} />
+                </div>
+                <div>
+                    <h2>Pressure</h2>
+                    <Line data={prepareChartData(bmpData, 'pressure')} />
+                </div>
             </Feed>
             <Footer />
         </HistoricScreen>

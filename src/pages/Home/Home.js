@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
 import { HistoricScreen, Feed, ControlPanel, ControlItem, Label, Input, Select, Button } from './style';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { UserContext } from "../../UserContext.js";
+import { Chart } from "react-google-charts";
 import axios from "axios";
 import { format, parseISO } from 'date-fns';
-import 'chart.js/auto';
 
 function Home() {
     const { info } = useContext(UserContext);
@@ -18,9 +17,9 @@ function Home() {
     const [pluviometerData, setPluviometerData] = useState([]);
     const [anemometerData, setAnemometerData] = useState([]);
     const [bmpData, setBmpData] = useState([]);
+    const [forecast, setForecast] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [weatherForecast, setWeatherForecast] = useState(null);
 
     useEffect(() => {
         const fetchStations = async () => {
@@ -60,6 +59,7 @@ function Home() {
                 idStation: station
             };
 
+
             console.log("Fetching data with params:", params);
 
             const responses = await Promise.all([
@@ -79,16 +79,6 @@ function Home() {
             setAnemometerData(responses[2].data);
             setBmpData(responses[3].data);
 
-            // Fetch weather forecast
-            const weatherResponse = await axios.get(`https://api.openweathermap.org/data/2.5/forecast`, {
-                params: {
-                    q: 'City,Country', // replace with actual city and country
-                    appid: 'YOUR_API_KEY', // replace with your OpenWeatherMap API key
-                    units: 'metric'
-                }
-            });
-            setWeatherForecast(weatherResponse.data);
-
         } catch (error) {
             console.error("Error fetching data:", error.response || error.message || error);
             setError("Error fetching data: " + (error.response?.data?.message || error.message));
@@ -105,20 +95,6 @@ function Home() {
         }
     };
 
-    const createChartData = (data, label, yAxisLabel) => {
-        return {
-            labels: data.map(d => d.timestamp),
-            datasets: [
-                {
-                    label: yAxisLabel,
-                    data: data.map(d => d.value),
-                    borderColor: 'rgba(75,192,192,1)',
-                    backgroundColor: 'rgba(75,192,192,0.2)',
-                    fill: true
-                }
-            ]
-        };
-    };
 
     return (
         <HistoricScreen>
@@ -159,24 +135,6 @@ function Home() {
                 </ControlPanel>
                 {loading && <p>Carregando...</p>}
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <div>
-                    {dhtData.length > 0 && <Line data={createChartData(dhtData, 'DHT11 Sensor', 'Temperature/Humidity')} />}
-                    {pluviometerData.length > 0 && <Line data={createChartData(pluviometerData, 'Pluviometer', 'Rainfall')} />}
-                    {anemometerData.length > 0 && <Line data={createChartData(anemometerData, 'Anemometer', 'Wind Speed')} />}
-                    {bmpData.length > 0 && <Line data={createChartData(bmpData, 'BMP Sensor', 'Pressure')} />}
-                </div>
-                {weatherForecast && (
-                    <div>
-                        <h2>Previsão do Tempo</h2>
-                        {weatherForecast.list.slice(0, 5).map((forecast, index) => (
-                            <div key={index}>
-                                <p>{new Date(forecast.dt_txt).toLocaleString()}</p>
-                                <p>Temperatura: {forecast.main.temp} °C</p>
-                                <p>Condição: {forecast.weather[0].description}</p>
-                            </div>
-                        ))}
-                    </div>
-                )}
             </Feed>
             <Footer />
         </HistoricScreen>
