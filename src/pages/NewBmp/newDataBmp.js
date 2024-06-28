@@ -28,7 +28,7 @@ export default function NewOrder() {
       const newBMP = await axios.post(`${process.env.REACT_APP_API_URL}/bmp`, post);
       console.log(newBMP.data);
       goTo('/home');
-      alert("Pedido registrado com sucesso");
+      alert("Dado registrado com sucesso");
     } catch (error) {
       if (error.name === "AxiosError") alert("Não foi possível cadastrar esse pedido, confira os dados");
     }

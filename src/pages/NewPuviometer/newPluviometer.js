@@ -24,7 +24,7 @@ export default function NewOrder() {
       const newPluviometer = await axios.post(`${process.env.REACT_APP_API_URL}/pluviometer`, post);
       console.log(newPluviometer.data);
       goTo('/home');
-      alert("Pedido registrado com sucesso");
+      alert("Dado registrado com sucesso");
     } catch (error) {
       if (error.name === "AxiosError") alert("Não foi possível cadastrar esse pedido, confira os dados");
     }
