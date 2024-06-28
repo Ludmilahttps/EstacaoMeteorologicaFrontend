@@ -22,10 +22,10 @@ function Footer() {
                 <ion-icon name="receipt-outline"></ion-icon>
                 <p>Inserir Dados BMP</p>
             </Link>
-            <Link to="/atualizar-email">
+            {/* <Link to="/cadastrar-usuario">
                 <ion-icon name="people-outline"></ion-icon>
                 <p>Cadastrar Usuário</p>
-            </Link>
+            </Link> */}
         </Foot>
     )
 }

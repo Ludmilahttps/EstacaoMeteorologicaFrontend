@@ -10,7 +10,7 @@ import Home from "./pages/Home/Home"
 import NewDHT from "./pages/NewDht/NewDht"
 import NewPluviometer from "./pages/NewPuviometer/newPluviometer"
 import NewAnemometer from "./pages/NewAnemometer/NewAnemometer"
-import UpdateEmail from "./pages/email/UpdateEmail"
+import NewUser from "./pages/email/UpdateEmail"
 import NewBmp from "./pages/NewBmp/newDataBmp"
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
           <Route path="/novo-dado-dht" element={< NewDHT />} />
           <Route path="/novo-dado-pluviometro" element={< NewPluviometer />} />
           <Route path="/novo-dado-anemometro" element={< NewAnemometer />} />
-          <Route path="/atualizar-email" element={< UpdateEmail />} />
+          <Route path="/cadastrar-usuario" element={< NewUser />} />
           <Route path="/novo-dado-bmp" element={< NewBmp />} />
         </Routes>
       </BrowserRouter>
