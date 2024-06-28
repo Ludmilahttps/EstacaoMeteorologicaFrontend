@@ -17,14 +17,14 @@ function Footer() {
             <Link data-test="new-expense" to="/novo-bolo">
                 <ion-icon name="sparkles-outline"></ion-icon>
                 <p>Inserir Dados Anemometro</p>
-            </Link>
-            <Link to="/atualizar-email">
-                <ion-icon name="people-outline"></ion-icon>
-                <p>Atualizar email</p>
-            </Link>
+            </Link>     
             <Link to="/deletar-pedido">
                 <ion-icon name="receipt-outline"></ion-icon>
                 <p>Inserir Dados BMP</p>
+            </Link>
+            <Link to="/atualizar-email">
+                <ion-icon name="people-outline"></ion-icon>
+                <p>Cadastrar Usuário</p>
             </Link>
         </Foot>
     )
