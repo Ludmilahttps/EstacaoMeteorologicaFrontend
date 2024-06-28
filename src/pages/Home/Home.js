@@ -101,7 +101,7 @@ function Home() {
 
     const formatDataForChart = (data, labels) => {
         return {
-            labels: data.map(entry => format(parseISO(entry.timestamp), 'dd/MM/yyyy HH:mm:ss')),
+            labels: data.map(entry => new Date(entry.timestamp).toLocaleString()),
             datasets: labels.map((label, index) => ({
                 label,
                 data: data.map(entry => entry[label.toLowerCase()]),
@@ -156,7 +156,7 @@ function Home() {
                         {dhtData.length > 0 && (
                             <div style={{ width: '45%', margin: '20px' }}>
                                 <Line
-                                    data={formatDataForChart(dhtData, ['Temperature', 'Humidity'])}
+                                    data={formatDataForChart(dhtData.date, ['Temperature', 'Humidity'])}
                                     options={{
                                         plugins: {
                                             title: {
@@ -175,7 +175,7 @@ function Home() {
                         {pluviometerData.length > 0 && (
                             <div style={{ width: '45%', margin: '20px' }}>
                                 <Line
-                                    data={formatDataForChart(pluviometerData, ['Rainfall'])}
+                                    data={formatDataForChart(pluviometerData.date, ['Rainfall'])}
                                     options={{
                                         plugins: {
                                             title: {
@@ -194,7 +194,7 @@ function Home() {
                         {anemometerData.length > 0 && (
                             <div style={{ width: '45%', margin: '20px' }}>
                                 <Line
-                                    data={formatDataForChart(anemometerData, ['WindSpeed'])}
+                                    data={formatDataForChart(anemometerData. , ['WindSpeed'])}
                                     options={{
                                         plugins: {
                                             title: {
