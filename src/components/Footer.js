@@ -18,7 +18,7 @@ function Footer() {
                 <ion-icon name="sparkles-outline"></ion-icon>
                 <p>Inserir Dados Anemometro</p>
             </Link>     
-            <Link to="/novo-dado-BMP">
+            <Link to="/novo-dado-bmp">
                 <ion-icon name="receipt-outline"></ion-icon>
                 <p>Inserir Dados BMP</p>
             </Link>

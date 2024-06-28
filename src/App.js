@@ -7,7 +7,7 @@ import { UserContext } from './UserContext'
 import SignIn from "./pages/SignIn/SignIn"
 import SignUp from "./pages/SignUp/SignUp"
 import Home from "./pages/Home/Home"
-import NewDataDHT from "./pages/NewDht/NewDht"
+import NewDHT from "./pages/NewDht/NewDht"
 import NewPluviometer from "./pages/NewPuviometer/newPluviometer"
 import NewAnemometer from "./pages/NewAnemometer/NewAnemometer"
 import UpdateEmail from "./pages/email/UpdateEmail"
