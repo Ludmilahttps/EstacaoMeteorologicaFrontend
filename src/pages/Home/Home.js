@@ -101,7 +101,7 @@ function Home() {
 
     const formatDataForChart = (data, labels) => {
         return {
-            labels: data.map(entry => new Date(entry.timestamp).toLocaleString('pt-BR')),
+            labels: data.map(entry => new Date(entry.timestamp).toLocaleString()),
             datasets: labels.map((label, index) => ({
                 label,
                 data: data.map(entry => entry[label.toLowerCase()]),
@@ -156,7 +156,7 @@ function Home() {
                         {dhtData.length > 0 && (
                             <div style={{ width: '45%', margin: '20px' }}>
                                 <Line
-                                    data={formatDataForChart(dhtData, ['Temperature', 'Humidity'])}
+                                    data={formatDataForChart(dhtData, ['Temperature', 'Humidity', 'Date'])}
                                     options={{
                                         plugins: {
                                             title: {
