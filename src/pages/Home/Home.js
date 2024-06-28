@@ -156,7 +156,7 @@ function Home() {
                         {dhtData.length > 0 && (
                             <div style={{ width: '45%', margin: '20px' }}>
                                 <Line
-                                    data={formatDataForChart(dhtData, ['Temperature', 'Humidity', 'Date'])}
+                                    data={formatDataForChart(dhtData, ['Temperature', 'Humidity'])}
                                     options={{
                                         plugins: {
                                             title: {
