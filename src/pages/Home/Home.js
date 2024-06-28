@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { HistoricScreen, Feed, ControlPanel, ControlItem, Label, Input, Select, Button } from './style';
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import { UserContext } from "../../UserContext.js";
-import { Line } from 'react-chartjs-2';
-import 'chart.js/auto';
 import axios from "axios";
+import 'chart.js/auto';
 import { format, parseISO } from 'date-fns';
+import React, { useContext, useEffect, useState } from 'react';
+import { Line } from 'react-chartjs-2';
+import { UserContext } from "../../UserContext.js";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import { Button, ControlItem, ControlPanel, Feed, HistoricScreen, Input, Label, Select } from './style';
 
 function Home() {
     const { info } = useContext(UserContext);
@@ -165,8 +165,8 @@ function Home() {
                                             }
                                         },
                                         scales: {
-                                            x: { title: { display: true, text: 'Time' } },
-                                            y: { title: { display: true, text: 'Values' } }
+                                            x: { title: { display: true, text: 'Tempo' } },
+                                            y: { title: { display: true, text: 'Humidade (%) - Temperatura (°C)' } }
                                         }
                                     }}
                                 />
@@ -184,8 +184,8 @@ function Home() {
                                             }
                                         },
                                         scales: {
-                                            x: { title: { display: true, text: 'Time' } },
-                                            y: { title: { display: true, text: 'Rainfall (mm)' } }
+                                            x: { title: { display: true, text: 'Tempo' } },
+                                            y: { title: { display: true, text: 'Quantidade de Chuva (mm)' } }
                                         }
                                     }}
                                 />
@@ -203,8 +203,8 @@ function Home() {
                                             }
                                         },
                                         scales: {
-                                            x: { title: { display: true, text: 'Time' } },
-                                            y: { title: { display: true, text: 'Wind Speed (m/s)' } }
+                                            x: { title: { display: true, text: 'Tempo' } },
+                                            y: { title: { display: true, text: 'Velocidade do Vento (m/s)' } }
                                         }
                                     }}
                                 />
@@ -222,20 +222,13 @@ function Home() {
                                             }
                                         },
                                         scales: {
-                                            x: { title: { display: true, text: 'Time' } },
-                                            y: { title: { display: true, text: 'Pressure (hPa)' } }
+                                            x: { title: { display: true, text: 'Tempo' } },
+                                            y: { title: { display: true, text: 'Pressão (hPa)' } }
                                         }
                                     }}
                                 />
                             </div>
                         )}
-                    </div>
-                )}
-                {forecast && (
-                    <div style={{ marginTop: '20px', textAlign: 'center', fontFamily: 'Raleway, sans-serif' }}>
-                        <h3>Previsão do Tempo</h3>
-                        <p>Temperatura: {forecast.temperature.toFixed(2)}°C</p>
-                        <p>Umidade: {forecast.humidity.toFixed(2)}%</p>
                     </div>
                 )}
             </Feed>
