@@ -101,7 +101,7 @@ function Home() {
 
     const formatDataForChart = (data, labels) => {
         return {
-            labels: data.map(entry => new Date(entry.timestamp).toLocaleString()),
+            labels: data.map(entry => new Date(entry.timestamp).toLocaleString('pt-BR')),
             datasets: labels.map((label, index) => ({
                 label,
                 data: data.map(entry => entry[label.toLowerCase()]),
